@@ -1,3 +1,8 @@
+const {
+  scrollbarGutter,
+  scrollbarWidth,
+  scrollbarColor,
+} = require("tailwind-scrollbar-utilities");
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -23,6 +28,7 @@ export default defineNuxtConfig({
           },
         },
       },
+      plugins: [scrollbarWidth()],
     },
   },
 });

@@ -8,6 +8,9 @@ dependencies:
   nuxt:
     specifier: ^3.11.2
     version: 3.11.2(@unocss/reset@0.59.3)(floating-vue@5.2.2)(rollup@4.14.3)(unocss@0.59.3)(vite@5.2.9)
+  tailwind-scrollbar-utilities:
+    specifier: ^0.2.0
+    version: 0.2.0
   vue:
     specifier: ^3.4.21
     version: 3.4.23
@@ -6315,6 +6318,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.4
     dev: true
+
+  /tailwind-scrollbar-utilities@0.2.0:
+    resolution: {integrity: sha512-he9r5Dsk/gqOUf/XGJ/p9o8INz6cO0WLxsFjxeAZXmVJiLRMHNx4FgQey35MbMT4kmRRifmwAIibVrA84aBe2Q==}
+    dev: false
 
   /tailwindcss@3.4.3:
     resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
