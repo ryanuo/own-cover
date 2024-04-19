@@ -8,9 +8,9 @@ dependencies:
   nuxt:
     specifier: ^3.11.2
     version: 3.11.2(@unocss/reset@0.59.3)(floating-vue@5.2.2)(rollup@4.14.3)(unocss@0.59.3)(vite@5.2.9)
-  tailwind-scrollbar-utilities:
-    specifier: ^0.2.0
-    version: 0.2.0
+  unsplash-js:
+    specifier: ^7.0.19
+    version: 7.0.19
   vue:
     specifier: ^3.4.21
     version: 3.4.23
@@ -28,6 +28,9 @@ devDependencies:
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(rollup@4.14.3)(vue@3.4.23)
+  tailwind-scrollbar-utilities:
+    specifier: ^0.2.0
+    version: 0.2.0
 
 packages:
 
@@ -6321,7 +6324,7 @@ packages:
 
   /tailwind-scrollbar-utilities@0.2.0:
     resolution: {integrity: sha512-he9r5Dsk/gqOUf/XGJ/p9o8INz6cO0WLxsFjxeAZXmVJiLRMHNx4FgQey35MbMT4kmRRifmwAIibVrA84aBe2Q==}
-    dev: false
+    dev: true
 
   /tailwindcss@3.4.3:
     resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
@@ -6624,6 +6627,11 @@ packages:
       chokidar: 3.6.0
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.6.1
+
+  /unsplash-js@7.0.19:
+    resolution: {integrity: sha512-j6qT2floy5Q2g2d939FJpwey1yw/GpQecFiSouyJtsHQPj3oqmqq3K4rI+GF8vU1zwGCT7ZwIGQd2dtCQLjYJw==}
+    engines: {node: '>=10'}
+    dev: false
 
   /unstorage@1.10.2(ioredis@5.4.1):
     resolution: {integrity: sha512-cULBcwDqrS8UhlIysUJs2Dk0Mmt8h7B0E6mtR+relW9nZvsf/u4SkAYyNliPiPW7XtFNb5u3IUMkxGxFTTRTgQ==}

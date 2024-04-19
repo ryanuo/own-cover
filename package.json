@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "nuxt": "^3.11.2",
-    "tailwind-scrollbar-utilities": "^0.2.0",
+    "unsplash-js": "^7.0.19",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@nuxt/ui": "^2.15.2",
     "@nuxtjs/i18n": "^8.3.0",
-    "@pinia/nuxt": "^0.5.1"
+    "@pinia/nuxt": "^0.5.1",
+    "tailwind-scrollbar-utilities": "^0.2.0"
   }
 }

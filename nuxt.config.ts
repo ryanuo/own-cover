@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     exposeConfig: true,
     config: {
+      plugins: [scrollbarWidth()],
       theme: {
         extend: {
           colors: {
@@ -26,9 +27,34 @@ export default defineNuxtConfig({
               900: "#212121",
             },
           },
+          aspectRatio: {
+            "2/1": "2 / 1",
+            "3/2": "3 / 2",
+            "4/3": "4 / 3",
+            "16/9": "16 / 9",
+            "9/16": "9 / 16",
+            "1/2": "1 / 2",
+            "2/3": "2 / 3",
+            "3/4": "3 / 4",
+          },
         },
       },
-      plugins: [scrollbarWidth()],
     },
+  },
+  i18n: {
+    locales: [
+      {
+        code: "en",
+        name: "English",
+        file: "en.json",
+      },
+      {
+        code: "cn",
+        name: "Chinese",
+        file: "cn.json",
+      },
+    ],
+    langDir: "locales",
+    defaultLocale: "cn",
   },
 });

@@ -1,16 +1,14 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="min-w-80 max-w-80 flex flex-col h-[100vh]">
-    <div class="h-[4rem]">
+  <aside class="min-w-96 max-w-96 flex flex-col h-screen p-3">
+    <nav class="h-[4rem] flex justify-between items-center">
       <slot name="head" />
-    </div>
-    <div
-      class="flex-auto bg-slate-600 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-color-auto"
-    >
+    </nav>
+    <section class="flex-grow bg-slate-100 overflow-y-auto overflow-x-hidden">
       <slot />
-    </div>
+    </section>
     <div class="h-[4rem]">
       <slot name="foot" />
     </div>
-  </div>
+  </aside>
 </template>

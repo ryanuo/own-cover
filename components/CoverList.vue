@@ -1,14 +1,19 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 <template>
   <CoverCardFrame>
     <template #head>
-      <div class="flex items-center h-full">
-        <div class="pl-3">
-          <img src="/logo.png" class="w-6 inline-flex" />
-          <span class="font-semibold align-middle text-sm">Own Cover</span>
-        </div>
+      <div class="pl-3">
+        <img src="/logo.png" class="w-8 inline-flex mr-1" />
+        <span class="font-bold align-middle text-xl">Own Cover</span>
+      </div>
+      <SwitchLang />
+    </template>
+    <template #default>
+      <div class="flex h-full justify-around">
+        <ImageItem />
+        <ImageItem />
       </div>
     </template>
-    <template></template>
   </CoverCardFrame>
 </template>

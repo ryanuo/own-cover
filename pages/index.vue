@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const route = useRoute();
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex overflow-hidden">
     <CoverList />
     <CoverPreview />
     <CoverConfig />
