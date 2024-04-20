@@ -27,7 +27,7 @@ const handleBlur = () => {
     <UInput @focus="showDropdown = true" @blur="handleBlur" :loading="pending"
       icon="i-heroicons-magnifying-glass-20-solid" placeholder="Searching..." />
     <div v-bind="containerProps" v-show="showDropdown"
-      class="h-[150px] mt-1 absolute w-full top-9 rounded-md shadow-lg z-10 scrollbar scrollbar-thin scrollbar-w-8 overflow-y-auto">
+      class="h-[150px] mt-1 absolute w-full top-9 rounded-md shadow-lg z-10 scrollbar scrollbar-thin scrollbar-w-8 overflow-y-auto bg-white">
       <div v-bind="wrapperProps">
         <div v-for="item in list"
           class="flex text-xs items-center mx-1 rounded-sm cursor-pointer hover:bg-gray-200 select-none p-1.5"

@@ -1,4 +1,5 @@
 {
   "common.Attribute": "属性",
-  "common.cover.title": "你必须非常努力，才能看起来毫不费力！"
+  "common.cover.title": "你必须非常努力，才能看起来毫不费力！",
+  "common.icon.search": "点击跳转 yesicon 搜索icon,选择Vue模式,复制name到输入框"
 }
