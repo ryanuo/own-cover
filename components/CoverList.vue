@@ -5,7 +5,7 @@
     <template #head>
       <div class="pl-3">
         <img src="/logo.png" class="w-8 inline-flex mr-1" />
-        <span class="font-bold align-middle text-xl">Own Cover</span>
+        <span class="font-bold align-middle text-base">Own Cover</span>
       </div>
       <SwitchLang />
     </template>

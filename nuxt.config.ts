@@ -1,16 +1,11 @@
-const {
-  scrollbarGutter,
-  scrollbarWidth,
-  scrollbarColor,
-} = require("tailwind-scrollbar-utilities");
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@nuxt/ui", "@nuxtjs/i18n"],
+  modules: ["@pinia/nuxt", "@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt"],
   tailwindcss: {
     exposeConfig: true,
     config: {
-      plugins: [scrollbarWidth()],
+      plugins: [require("tailwind-scrollbar")],
       theme: {
         extend: {
           colors: {

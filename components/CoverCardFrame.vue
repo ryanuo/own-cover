@@ -4,7 +4,7 @@
     <nav class="h-[4rem] flex justify-between items-center">
       <slot name="head" />
     </nav>
-    <section class="flex-grow bg-slate-100 overflow-y-auto overflow-x-hidden">
+    <section class="flex-grow overflow-y-auto overflow-x-hidden">
       <slot />
     </section>
     <div class="h-[4rem]">
