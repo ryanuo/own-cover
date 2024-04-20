@@ -1,5 +1,10 @@
 {
   "common.Attribute": "属性",
   "common.cover.title": "你必须非常努力，才能看起来毫不费力！",
-  "common.icon.search": "点击跳转 yesicon 搜索icon,选择Vue模式,复制name到输入框"
+  "common.icon.search": "点击跳转 yesicon 搜索icon,选择Vue模式,复制name到输入框",
+  "config.aspect": "宽高比",
+  "config.mask": "蒙层",
+  "config.font": "字体",
+  "config.text": "文字",
+  "config.icon": "图标"
 }

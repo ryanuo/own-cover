@@ -5,7 +5,7 @@ interface AsyncData<T> {
   pending: Ref<boolean>
 }
 import PickColors from 'vue-pick-colors';
-import { positionItems } from '~/constants/enums';
+import { aspectRatioOptions, positionItems } from '~/constants/enums';
 
 const config = useRuntimeConfig()
 const coverInfoStore = useCoverInfoStore()
@@ -40,7 +40,12 @@ const openIconSearch = () => {
       <h2 class="font-bold">{{ $t("common.Attribute", '属性') }}</h2>
     </template>
     <template #default>
-      <div class="flex flex-col gap-2 p-1">
+      <div class="flex flex-col gap-5 p-1">
+        <UDivider :label='$t("config.aspect")' />
+        <USelectMenu selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" @change="(e: any) => {
+          coverInfoStore.aspectRatio = e;
+        }" v-model="coverInfoStore.aspectRatio" :options="aspectRatioOptions" />
+        <UDivider :label="$t('config.mask')" />
         <div class="flex justify-between items-center gap-2 relative">
           <URange :step="0.05" size="xs" v-model="coverInfoStore.colorAlpha" @change="(e: number) => {
             coverInfoStore.setCoverMarkColor(e)
@@ -50,12 +55,12 @@ const openIconSearch = () => {
             coverInfoStore.setColorAlpha()
           }" show-alpha />
         </div>
-        <UDivider label="Font" />
+        <UDivider :label="$t('config.font')" />
         <SelectOption :options="data" :pending="pending" />
-        <UDivider label="Text" />
+        <UDivider :label="$t('config.text')" />
         <UInput v-model="coverInfoStore.coverTitle" />
         <UInput v-model="coverInfoStore.coverAuthor" />
-        <UDivider label="Icon" />
+        <UDivider :label="$t('config.icon')" />
         <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="coverInfoStore.iconPosition">
           <template #default="{ item }">
             <div class="flex items-center gap-2 relative truncate">

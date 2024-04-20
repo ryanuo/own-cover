@@ -1,5 +1,10 @@
 {
   "common.Attribute": "Attribute",
   "common.cover.title": "You must work very hard to appear effortless.",
-  "common.icon.search": "Tap to redirect via yesicon search Icon, then copy the Icon name for Vue mode."
+  "common.icon.search": "Tap to redirect via yesicon search Icon, then copy the Icon name for Vue mode.",
+  "config.aspect": "Aspect Ratio",
+  "config.mask": "Mask Layer",
+  "config.font": "Font",
+  "config.text": "Text",
+  "config.icon": "Icon"
 }

@@ -1,5 +1,5 @@
 import tinycolor from "tinycolor2";
-import { positionItems } from "~/constants/enums";
+import { aspectRatioOptions, positionItems } from "~/constants/enums";
 
 export const useCoverInfoStore = defineStore("coverInfoStore", {
   state: (): {
@@ -9,6 +9,7 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     coverAuthor: string;
     coverMarkColor: string;
     colorAlpha: number;
+    aspectRatio: any;
   } => ({
     iconName: "material-symbols:adaptive-audio-mic",
     iconPosition: 2,
@@ -16,6 +17,7 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     coverAuthor: "@Ryanco",
     coverMarkColor: "rgba(0, 0, 0, 0.3)",
     colorAlpha: 0.3,
+    aspectRatio: aspectRatioOptions[2],
   }),
   getters: {
     coverIconPosition: (state) => {
