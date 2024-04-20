@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "nuxt": "^3.11.2",
+    "tinycolor2": "^1.6.0",
     "unsplash-js": "^7.0.19",
     "vue": "^3.4.21",
+    "vue-pick-colors": "^1.6.5",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {

@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { positionItems } from '@/constants/enums';
-
 interface AsyncData<T> {
   data: T | null;
   execute: () => Promise<void>;
   pending: Ref<boolean>
 }
+import PickColors from 'vue-pick-colors';
+import { positionItems } from '~/constants/enums';
 
 const config = useRuntimeConfig()
 const coverInfoStore = useCoverInfoStore()
-
 const { data, execute, pending }: AsyncData<any> = await useAsyncData(
   'mountains',
   () => $fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${config?.public.fontapikey}`),
@@ -42,7 +41,15 @@ const openIconSearch = () => {
     </template>
     <template #default>
       <div class="flex flex-col gap-2 p-1">
-        <URange :step="5" size="xs" />
+        <div class="flex justify-between items-center gap-2 relative">
+          <URange :step="0.05" size="xs" v-model="coverInfoStore.colorAlpha" @change="(e: number) => {
+            coverInfoStore.setCoverMarkColor(e)
+          }" :min="0" :max="1" />
+          <pick-colors class="cursor-pointer" :value="coverInfoStore.coverMarkColor" @change="($event) => {
+            coverInfoStore.coverMarkColor = $event
+            coverInfoStore.setColorAlpha()
+          }" show-alpha />
+        </div>
         <UDivider label="Font" />
         <SelectOption :options="data" :pending="pending" />
         <UDivider label="Text" />
