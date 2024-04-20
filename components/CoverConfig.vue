@@ -28,6 +28,7 @@ const { data, execute, pending }: AsyncData<any> = await useAsyncData(
 
 onMounted(() => {
   execute()
+  coverInfoStore.initCoverInfo()
 })
 
 const openIconSearch = () => {

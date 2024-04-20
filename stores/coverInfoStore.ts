@@ -9,7 +9,7 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
   } => ({
     iconName: "material-symbols:adaptive-audio-mic",
     iconPosition: 2,
-    coverTitle: useI18n().t("common.cover.title"),
+    coverTitle: "",
     coverAuthor: "@Ryan Co",
   }),
   getters: {
@@ -23,6 +23,10 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
   actions: {
     setIconPosition(position: number) {
       this.iconPosition = position;
+    },
+    // 在创建 store 时不立即初始化翻译内容，而是在需要时再获取
+    initCoverInfo() {
+      this.coverTitle = useI18n().t("common.cover.title");
     },
   },
 });
