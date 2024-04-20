@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { positionItems } from '@/constants/enums';
 
-const showDropdown = ref(false)
-
 interface AsyncData<T> {
   data: T | null;
   execute: () => Promise<void>;
   pending: Ref<boolean>
 }
 
+const config = useRuntimeConfig()
+
 const { data, execute, pending }: AsyncData<any> = await useAsyncData(
   'mountains',
-  () => $fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAOES8EmKhuJEnsn9kS1XKBpxxp-TgN8Jc'),
+  () => $fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${config?.public.fontapikey}`),
   {
     immediate: false,
     transform(res: any) {

@@ -52,4 +52,10 @@ export default defineNuxtConfig({
     langDir: "locales",
     defaultLocale: "cn",
   },
+  runtimeConfig: {
+    public: {
+      unsplashapikey: process.env.NEXT_PUBLIC_UNSPLASHAPIKEY,
+      fontapikey: process.env.NEXT_PUBLIC_FONTAPIKEY,
+    },
+  },
 });
