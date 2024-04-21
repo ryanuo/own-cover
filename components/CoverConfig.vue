@@ -31,14 +31,17 @@ onMounted(() => {
   coverInfoStore.initCoverInfo()
 })
 
-const openIconSearch = () => {
-  window.open('https://yesicon.app/')
+const openIconUrl = (s: string) => {
+  window.open(s)
 }
+
 </script>
 <template>
   <CoverCardFrame>
     <template #head>
       <h2 class="font-bold">{{ $t("common.Attribute", '属性') }}</h2>
+      <Icon class="cursor-pointer hover:scale-125" name="zmdi:github"
+        @click="openIconUrl('https://github.com/rr210/own-cover/')" />
     </template>
     <template #default>
       <div class="flex flex-col gap-5 p-1">
@@ -84,7 +87,7 @@ const openIconSearch = () => {
               <template #text>
                 <div class="w-28 text-wrap h-auto">{{ $t('common.icon.search', '点击跳转yesicon搜索icon') }}</div>
               </template>
-              <Icon name="codicon:go-to-search" @click="openIconSearch" />
+              <Icon name="codicon:go-to-search" @click="openIconUrl('https://yesicon.app/')" />
             </UTooltip>
           </template>
           <template #trailing>

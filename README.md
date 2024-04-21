@@ -1,75 +1,38 @@
-# Nuxt 3 Minimal Starter
+## Own Cover
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<img src="public\logo.png" width="80" height="80" />
 
-## Setup
+> [!NOTE]
+> Still In Development
 
-Make sure to install the dependencies:
+## Description
+This is a simple web app that allows you to upload an image and get a cover of your choice.
 
-```bash
-# npm
-npm install
+## Features
+- [x] Upload an image or Choose a cover.
+- [x] Customize the cover Text.
+- [x] Customize the cover Font.
+- [x] Customize the cover Mask Color.
+- [x] Customize the cover Icon.
+- [x] Download the cover.
 
-# pnpm
-pnpm install
+## Usage
+1. Clone the repository
+2. Install the dependencies
+3. Run the Web
 
-# yarn
-yarn install
+## Build
+netlify deploy
+vercel deploy
 
-# bun
-bun install
-```
+## Contribution
 
-## Development Server
+contributions of all forms are welcome including but not limited to beautifying the interface adding features improving the code fixing bugs etc.
 
-Start the development server on `http://localhost:3000`:
+<a href="https://github.com/rr210/own-cover/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=rr210/own-cover" />
+</a>
 
-```bash
-# npm
-npm run dev
+## License
 
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[MIT](./LICENSE) License © 2024-PRESENT [Ryan Co](https://github.com/rr210)
