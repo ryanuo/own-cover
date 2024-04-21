@@ -1,4 +1,10 @@
 <script setup lang="ts">
+useHead({
+  title: 'Own Cover',
+  meta: [
+    { name: 'description', content: 'My Own Cover Site.' }
+  ],
+})
 </script>
 
 <template>

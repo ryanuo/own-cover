@@ -5,7 +5,7 @@ interface AsyncData<T> {
   pending: Ref<boolean>
 }
 import PickColors from 'vue-pick-colors';
-import { aspectRatioOptions, positionItems } from '~/constants/enums';
+import { aspectRatioOptions, pickerPreColors, positionItems } from '~/constants/enums';
 
 const config = useRuntimeConfig()
 const coverInfoStore = useCoverInfoStore()
@@ -19,6 +19,7 @@ const { data, execute, pending }: AsyncData<any> = await useAsyncData(
         return {
           label: item.family,
           value: item.menu,
+          files: item.files
         }
       })
     }
@@ -45,21 +46,25 @@ const openIconSearch = () => {
         <USelectMenu selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" @change="(e: any) => {
           coverInfoStore.aspectRatio = e;
         }" v-model="coverInfoStore.aspectRatio" :options="aspectRatioOptions" />
+
         <UDivider :label="$t('config.mask')" />
         <div class="flex justify-between items-center gap-2 relative">
           <URange :step="0.05" size="xs" v-model="coverInfoStore.colorAlpha" @change="(e: number) => {
             coverInfoStore.setCoverMarkColor(e)
           }" :min="0" :max="1" />
-          <pick-colors class="cursor-pointer" :value="coverInfoStore.coverMarkColor" @change="($event) => {
+          <pick-colors :colors="pickerPreColors" class="cursor-pointer" :value="coverInfoStore.coverMarkColor" @change="($event) => {
             coverInfoStore.coverMarkColor = $event
             coverInfoStore.setColorAlpha()
           }" show-alpha />
         </div>
+
         <UDivider :label="$t('config.font')" />
-        <SelectOption :options="data" :pending="pending" />
+        <SelectOption :options="data" :pending="pending" v-model:model-value="coverInfoStore.font" />
+
         <UDivider :label="$t('config.text')" />
-        <UInput v-model="coverInfoStore.coverTitle" />
+        <UTextarea v-model="coverInfoStore.coverTitle" />
         <UInput v-model="coverInfoStore.coverAuthor" />
+
         <UDivider :label="$t('config.icon')" />
         <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="coverInfoStore.iconPosition">
           <template #default="{ item }">

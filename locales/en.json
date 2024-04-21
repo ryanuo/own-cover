@@ -6,5 +6,6 @@
   "config.mask": "Mask Layer",
   "config.font": "Font",
   "config.text": "Text",
-  "config.icon": "Icon"
+  "config.icon": "Icon",
+  "cover.empty": "The List Of Searched Content Is Empty."
 }

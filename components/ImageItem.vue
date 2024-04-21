@@ -1,8 +1,30 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  image: {
+    type: Object,
+    required: true,
+  },
+});
+
+const coverInfo = useCoverInfoStore()
+
+const setCoverImgMap = (image: any) => {
+  const img = {
+    id: image.id,
+    previewImg: image.urls.regular,
+    username: image.user.name,
+    username_avatar: image.user.profile_image?.small,
+    profile: `${image.user.links.html}?utm_source=https://picprose.net&utm_medium=referral`,
+    downLoad_path: image.links.download_location,
+  }
+  coverInfo.setCoverImage(img)
+  coverInfo.setHistorySelected(image)
+}
+
+</script>
 <template>
   <div class="w-5/12 h-24 m-2">
-    <img
-      src="https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MjUwMjd8MHwxfHNlYXJjaHwxfHxzY2VuZXJ5fGVufDB8fHx8MTcxMzQxODY1OXww&ixlib=rb-4.0.3&q=80&w=400"
+    <img @click="() => setCoverImgMap(image)" :src="image.urls?.small"
       class="transition-transform duration-200 transform hover:scale-105 rounded cursor-pointer object-cover w-full h-full" />
   </div>
 </template>

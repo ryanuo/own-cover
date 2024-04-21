@@ -1,7 +1,12 @@
 import { createApi } from "unsplash-js";
 
-const unsplash = createApi({
-  accessKey: `${process.env.NEXT_PUBLIC_UNSPLASH_API_KEY}`,
-});
+const useUnsplash = () => {
+  const accessKey = useRuntimeConfig().public.unsplashapikey;
 
-export default unsplash;
+  const unsplash = createApi({
+    accessKey,
+  });
+  return unsplash;
+};
+
+export default useUnsplash;

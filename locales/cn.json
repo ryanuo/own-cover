@@ -6,5 +6,6 @@
   "config.mask": "蒙层",
   "config.font": "字体",
   "config.text": "文字",
-  "config.icon": "图标"
+  "config.icon": "图标",
+  "cover.empty": "搜索的内容列表为空"
 }

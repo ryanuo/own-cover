@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "nuxt": "^3.11.2",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "tinycolor2": "^1.6.0",
     "unsplash-js": "^7.0.19",
     "vue": "^3.4.21",

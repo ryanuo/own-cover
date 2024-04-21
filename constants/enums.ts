@@ -96,3 +96,22 @@ export const aspectRatioOptions = [
     value: "Customize",
   },
 ];
+import tinycolor from "tinycolor2";
+
+export const pickerPreColors = [
+  "#000",
+  "#ff4500",
+  "#ff8c00",
+  "#ffd700",
+  "#90ee90",
+  "#00ced1",
+  "#1e90ff",
+  "#c71585",
+  "#ff4500",
+  "#ff7800",
+  "#00babd",
+  "#1f93ff",
+  "#fa64c3",
+].map((item) => {
+  return tinycolor(item).setAlpha(0.2).toString();
+});
