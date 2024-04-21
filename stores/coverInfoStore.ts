@@ -20,7 +20,7 @@ interface CoverInfoStore {
   font: {
     label: string;
     value: string;
-    files?: string[];
+    files?: Record<string, string>;
   };
   coverList: any;
   previewCoverMap: CoverImage;
@@ -31,15 +31,20 @@ interface CoverInfoStore {
 export const useCoverInfoStore = defineStore("coverInfoStore", {
   state: (): CoverInfoStore => ({
     iconName: "material-symbols:adaptive-audio-mic",
-    iconPosition: 2,
-    coverTitle: "",
+    iconPosition: 3,
+    coverTitle: "You must work very hard to appear effortless.",
     coverAuthor: "@Ryanco",
     coverMarkColor: "rgba(0, 0, 0, 0.3)",
     colorAlpha: 0.3,
     aspectRatio: aspectRatioOptions[2],
     font: {
-      label: "Roboto",
-      value: "https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu5GxP.ttf",
+      label: "ADLaM Display",
+      value:
+        "https://fonts.gstatic.com/s/adlamdisplay/v1/KFOhCnGXkPOLlhx6jD8_b1ZEOsDSlQ.ttf",
+      files: {
+        regular:
+          "https://fonts.gstatic.com/s/adlamdisplay/v1/KFOhCnGXkPOLlhx6jD8_b1ZECsHYkYBPY3o.ttf",
+      },
     },
     coverList: [],
     previewCoverMap: {
@@ -68,10 +73,6 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     setIconPosition(position: number) {
       this.iconPosition = position;
     },
-    // 在创建 store 时不立即初始化翻译内容，而是在需要时再获取
-    initCoverInfo() {
-      this.coverTitle = useI18n().t("common.cover.title");
-    },
     setColorAlpha() {
       this.colorAlpha = tinycolor(this.coverMarkColor).getAlpha().toFixed(2);
     },
@@ -81,6 +82,9 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     },
     setCoverList(list: any[]) {
       this.coverList = list;
+    },
+    setCoverTitle(title: string) {
+      this.coverTitle = title;
     },
     setCoverImage(img: CoverImage) {
       this.previewCoverMap = img;

@@ -35,6 +35,11 @@ const updateFontFace = () => {
     `
   }
 
+  style.textContent += `
+  :root{
+    --cover-font-family: '${fontFamily}';
+  }`
+
   // 将 style 元素添加到文档头部
   document.head.appendChild(style)
 }
@@ -49,9 +54,7 @@ watch(() => coverInfoStore.font, () => {
 
 </script>
 <template>
-  <div :style="{
-    '--cover-font-family': coverInfoStore.font.label
-  }"
+  <div
     class="cover-preview-font flex-auto bg-gray-100 overflow-x-auto flex items-center rounded-md scrollbar scrollbar-thin scrollbar-w-8">
     <div class="m-auto rounded-md flex items-center justify-center min-w-[800px]">
       <div class="relative">

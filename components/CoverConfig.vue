@@ -28,12 +28,20 @@ const { data, execute, pending }: AsyncData<any> = await useAsyncData(
 
 onMounted(() => {
   execute()
-  coverInfoStore.initCoverInfo()
 })
 
-const openIconUrl = (s: string) => {
-  window.open(s)
+const openIconUrl = (url: string) => {
+  window.open(url)
 }
+
+const iconP = ref(2)
+const textTitle = ref('You must work very hard to app1212ear effortless.')
+onMounted(() => {
+  nextTick(() => {
+    iconP.value = coverInfoStore.iconPosition
+    textTitle.value = coverInfoStore.coverTitle
+  })
+})
 
 </script>
 <template>
@@ -65,11 +73,13 @@ const openIconUrl = (s: string) => {
         <SelectOption :options="data" :pending="pending" v-model:model-value="coverInfoStore.font" />
 
         <UDivider :label="$t('config.text')" />
-        <UTextarea v-model="coverInfoStore.coverTitle" />
+        <UTextarea v-model="textTitle" @input="(e: any) => {
+          coverInfoStore.setCoverTitle(e.target.value as string)
+        }" />
         <UInput v-model="coverInfoStore.coverAuthor" />
 
         <UDivider :label="$t('config.icon')" />
-        <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="coverInfoStore.iconPosition">
+        <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="iconP">
           <template #default="{ item }">
             <div class="flex items-center gap-2 relative truncate">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
