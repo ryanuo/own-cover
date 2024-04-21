@@ -14,7 +14,7 @@ const updateFontFace = () => {
   }
 
   // 创建新的 style 元素并设置 @font-face 规则
-  const style = document.createElement('style')
+  const style = document?.createElement('style')
   style.id = 'cover-preview'
 
   if (fontFiles) {
@@ -40,7 +40,7 @@ const updateFontFace = () => {
 }
 // 监听 coverInfoStore.font 的变化
 watch(() => coverInfoStore.font, () => {
-  if (coverInfoStore.font.label) {
+  if (coverInfoStore.font.label && document) {
     setTimeout(() => {
       updateFontFace()
     });
