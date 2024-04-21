@@ -35,11 +35,11 @@ const openIconUrl = (url: string) => {
 }
 
 const iconP = ref(2)
-const textTitle = ref('You must work very hard to app1212ear effortless.')
+// const textTitle = ref('You must work very hard to app1212ear effortless.')
 onMounted(() => {
   nextTick(() => {
     iconP.value = coverInfoStore.iconPosition
-    textTitle.value = coverInfoStore.coverTitle
+    // textTitle.value = coverInfoStore.coverTitle
   })
 })
 
@@ -73,9 +73,11 @@ onMounted(() => {
         <SelectOption :options="data" :pending="pending" v-model:model-value="coverInfoStore.font" />
 
         <UDivider :label="$t('config.text')" />
-        <UTextarea v-model="textTitle" @input="(e: any) => {
+        <UInput v-model="coverInfoStore.coverTitle" />
+        <UTextarea v-model="coverInfoStore.coverTitle" />
+        <!-- <UTextarea v-model="coverInfoStore.coverTitle" @input="(e: any) => {
           coverInfoStore.setCoverTitle(e.target.value as string)
-        }" />
+        }" /> -->
         <UInput v-model="coverInfoStore.coverAuthor" />
 
         <UDivider :label="$t('config.icon')" />
