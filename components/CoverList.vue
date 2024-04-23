@@ -6,11 +6,11 @@ const tabActive = ref(0);
 const asides = reactive([
   {
     key: "coverList",
-    label: t("cover.config.image"),
+    label: t("cover.config.image", "Images"),
   },
   {
     key: "history_selected_lists",
-    label: t("cover.config.history"),
+    label: t("cover.config.history", "History"),
   },
 ]);
 
@@ -37,26 +37,37 @@ const handleClick = () => {
       <SwitchLang />
     </template>
     <template #default>
-      <UTabs :items="asides" v-model="tabActive" :ui="{
-        wrapper: 'h-full',
-        container: 'h-[80vh] flex justify-center',
-        base: 'w-full',
-      }">
+      <UTabs
+        :items="asides"
+        v-model="tabActive"
+        :ui="{
+          wrapper: 'h-full',
+          container: 'h-[80vh] flex justify-center',
+          base: 'w-full',
+        }"
+      >
         <template #item="{ item }">
-          <div :class="{
-            'flex justify-around w-full flex-wrap': true,
-            'h-full': !coverInfo[item.key].length,
-            'h-auto': coverInfo[item.key].length,
-            'overflow-auto scrollbar scrollbar-thin scrollbar-w-8': true,
-          }">
-            <div v-if="coverInfo.coverLoading && !coverInfo[item.key].length" class="overflow-hidden">
+          <div
+            class="flex justify-between content-start w-full h-full flex-wrap overflow-auto scrollbar scrollbar-thin scrollbar-w-8"
+          >
+            <div
+              v-if="coverInfo.coverLoading && !coverInfo[item.key].length"
+              class="overflow-hidden"
+            >
               <USkeleton v-for="i in Array(30)" class="h-4 w-[50vw] my-2" />
             </div>
-            <ImageItem v-else-if="coverInfo[item.key].length > 0" v-for="i in coverInfo[item.key]" :image="i" />
-            <div v-else class="overflow-hidden flex justify-center items-center w-full">
+            <ImageItem
+              v-else-if="coverInfo[item.key].length > 0"
+              v-for="i in coverInfo[item.key]"
+              :image="i"
+            />
+            <div
+              v-else
+              class="overflow-hidden flex justify-center items-center w-full"
+            >
               <div class="text-center text-sm">
-                <Empty class="m-auto" />
-                {{ $t("cover.empty") }}
+                <Empty class="m-auto mt-10" />
+                {{ $t("cover.empty", "empty") }}
               </div>
             </div>
           </div>
@@ -68,8 +79,14 @@ const handleClick = () => {
         <UButton>
           <Icon name="bi:upload" />
         </UButton>
-        <UInput v-model="coverInfo.coverSearchQuery" class="w-full mx-2" size="xs" color="primary" variant="outline"
-          placeholder="Search..." />
+        <UInput
+          v-model="coverInfo.coverSearchQuery"
+          class="w-full mx-2"
+          size="xs"
+          color="primary"
+          variant="outline"
+          placeholder="Search..."
+        />
         <UButton @click="handleClick">
           <Icon name="ep:search" />
         </UButton>
@@ -77,19 +94,26 @@ const handleClick = () => {
       <template v-else>
         <UPopover class="w-full" :popper="{ placement: 'top-end' }">
           <UButton class="w-full" :ui="{ base: 'justify-center' }">
-            {{ $t("cover.clear.title") }}
+            {{ $t("cover.clear.title", "Clear History List") }}
           </UButton>
           <template #panel="{ close }">
-            <div class="p-2">{{ $t("cover.clear") }}</div>
+            <div class="p-2">
+              {{ $t("cover.clear", "Confirm to clear the history list?") }}
+            </div>
             <div class="flex justify-evenly">
               <UButton @click="close" class="my-1">
-                {{ $t("cover.clear.cancel") }}</UButton>
-              <UButton @click="() => {
-                  coverInfo.history_selected_lists = [];
-                  close();
-                }
-                " class="my-1">
-                {{ $t("cover.clear.confirm") }}
+                {{ $t("cover.clear.cancel", "cancel") }}</UButton
+              >
+              <UButton
+                @click="
+                  () => {
+                    coverInfo.history_selected_lists = [];
+                    close();
+                  }
+                "
+                class="my-1"
+              >
+                {{ $t("cover.clear.confirm", "confirm") }}
               </UButton>
             </div>
           </template>
