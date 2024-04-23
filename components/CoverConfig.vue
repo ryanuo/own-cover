@@ -6,6 +6,7 @@ interface AsyncData<T> {
 }
 
 import domToImg from "dom-to-image";
+import PickColors from "vue-pick-colors";
 import {
   aspectRatioOptions,
   pickerPreColors,
