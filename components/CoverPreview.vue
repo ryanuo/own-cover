@@ -43,6 +43,12 @@ const updateFontFace = () => {
   // 将 style 元素添加到文档头部
   document.head.appendChild(style)
 }
+
+const coverInfo = ref()
+onMounted(() => {
+  coverInfo.value = coverInfoStore
+})
+
 // 监听 coverInfoStore.font 的变化
 watch(() => coverInfoStore.font, () => {
   if (coverInfoStore.font.label && document) {
@@ -50,30 +56,30 @@ watch(() => coverInfoStore.font, () => {
       updateFontFace()
     });
   }
-}, { immediate: true }) // 立即触发一次以确保页面加载时字体能够正确加载
+}, { immediate: true })
 
 </script>
 <template>
   <div
     class="cover-preview-font flex-auto bg-gray-100 overflow-x-auto flex items-center rounded-md scrollbar scrollbar-thin scrollbar-w-8">
     <div class="m-auto rounded-md flex items-center justify-center min-w-[800px]">
-      <div class="relative">
+      <div id="cover-preview-generate" class="relative" v-if="coverInfo">
         <div class="max-h-[90vh]" :style="{
-          aspectRatio: coverInfoStore.aspectRatio.value
+          aspectRatio: coverInfo.aspectRatio.value
         }">
-          <img :src="coverInfoStore.previewCoverMap?.previewImg" class="rounded-md object-cover w-full h-full" />
+          <img :src="coverInfo.previewCoverMap?.previewImg" class="rounded-md object-cover w-full h-full" />
         </div>
         <div class="text-white absolute top-0 left-0 right-0 h-full rounded-md flex items-center justify-center"
-          :style="{ backgroundColor: coverInfoStore.coverMarkColor }">
+          :style="{ backgroundColor: coverInfo.coverMarkColor }">
           <div class="text-center">
             <h4 class="font-bold text-4xl px-5 p-4 text-center leading-tight">
-              {{ coverInfoStore.coverTitle }}
+              {{ coverInfo.coverTitle }}
             </h4>
-            <div class="text-center mt-6 mb-4 text-2xl font-semibold">{{ coverInfoStore.coverAuthor }}</div>
-            <Icon size="32" :name="coverInfoStore.iconName" v-if="coverInfoStore.iconPosition === 2" />
+            <div class="text-center mt-6 mb-4 text-2xl font-semibold">{{ coverInfo.coverAuthor }}</div>
+            <Icon size="32" :name="coverInfo.iconName" v-if="coverInfo.iconPosition === 2" />
           </div>
-          <Icon size="32" class="absolute" :style="coverInfoStore.coverIconPosition" :name="coverInfoStore.iconName"
-            v-if="coverInfoStore.iconPosition !== 2" />
+          <Icon size="32" class="absolute" :style="coverInfo.coverIconPosition" :name="coverInfo.iconName"
+            v-if="coverInfo.iconPosition !== 2" />
         </div>
       </div>
     </div>

@@ -2,16 +2,29 @@
 interface AsyncData<T> {
   data: T | null;
   execute: () => Promise<void>;
-  pending: Ref<boolean>
+  pending: Ref<boolean>;
 }
-import PickColors from 'vue-pick-colors';
-import { aspectRatioOptions, pickerPreColors, positionItems } from '~/constants/enums';
 
-const config = useRuntimeConfig()
-const coverInfoStore = useCoverInfoStore()
+import domToImg from "dom-to-image";
+import {
+  aspectRatioOptions,
+  pickerPreColors,
+  positionItems,
+} from "~/constants/enums";
+
+const config = useRuntimeConfig();
+const coverInfoStore = useCoverInfoStore();
+const imgPre = ref<string>("");
+const isOpenPreview = ref(false);
+const iconPI = ref(2);
+const textTitle = ref('You must work very hard to app1212ear effortless.')
+
 const { data, execute, pending }: AsyncData<any> = await useAsyncData(
-  'mountains',
-  () => $fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${config?.public.fontapikey}`),
+  "mountains",
+  () =>
+    $fetch(
+      `https://www.googleapis.com/webfonts/v1/webfonts?key=${config?.public.fontapikey}`
+    ),
   {
     immediate: false,
     transform(res: any) {
@@ -19,54 +32,80 @@ const { data, execute, pending }: AsyncData<any> = await useAsyncData(
         return {
           label: item.family,
           value: item.menu,
-          files: item.files
-        }
-      })
-    }
+          files: item.files,
+        };
+      });
+    },
   }
-)
-
+);
+const colorAlpha = ref(0.3)
+const aspectRatio = ref()
 onMounted(() => {
-  execute()
-})
+  execute();
+  nextTick(() => {
+    iconPI.value = coverInfoStore.iconPosition;
+    textTitle.value = coverInfoStore.coverTitle
+    colorAlpha.value = coverInfoStore.colorAlpha
+    aspectRatio.value = coverInfoStore.aspectRatio
+  });
+});
 
-const openIconUrl = (url: string) => {
-  window.open(url)
+const reset = () => {
+  coverInfoStore.$reset()
+  coverInfoStore.queryCoverList()
 }
 
-const iconP = ref(2)
-const textTitle = ref('You must work very hard to app1212ear effortless.')
-onMounted(() => {
-  nextTick(() => {
-    iconP.value = coverInfoStore.iconPosition
-    textTitle.value = coverInfoStore.coverTitle
-  })
-})
+const generateCover = async () => {
+  const ele = document.getElementById("cover-preview-generate");
+  domToImg.toPng(ele).then((dataUrl: string) => {
+    imgPre.value = dataUrl;
+    isOpenPreview.value = true;
+  });
+};
+
+const formatted = useDateFormat(useNow(), "YYYY-MM-DD-HH-mm-ss");
+function downloadImage() {
+  const link = document.createElement("a");
+  link.href = imgPre.value;
+  link.download = formatted.value + ".png";
+  document.body.appendChild(link); // 添加到文档以确保能够被点击
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+const openIconUrl = (url: string) => window.open(url)
 
 </script>
 <template>
   <CoverCardFrame>
     <template #head>
-      <h2 class="font-bold">{{ $t("common.Attribute", '属性') }}</h2>
+      <h2 class="font-bold">{{ $t("common.Attribute", "属性") }}</h2>
       <Icon class="cursor-pointer hover:scale-125" name="zmdi:github"
         @click="openIconUrl('https://github.com/rr210/own-cover/')" />
     </template>
     <template #default>
       <div class="flex flex-col gap-5 p-1">
-        <UDivider :label='$t("config.aspect")' />
-        <USelectMenu selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" @change="(e: any) => {
-          coverInfoStore.aspectRatio = e;
-        }" v-model="coverInfoStore.aspectRatio" :options="aspectRatioOptions" />
+        <UDivider :label="$t('config.aspect')" />
+        <USelectMenu selected-icon="i-heroicons-hand-thumb-up-solid" :uiMenu="{
+          select: 'cursor-pointer',
+          option: {
+            base: 'cursor-pointer'
+          }
+        }" class="w-full" @change="(val: any) => {
+          coverInfoStore.aspectRatio = val;
+        }" v-model="aspectRatio" :options="aspectRatioOptions" />
 
         <UDivider :label="$t('config.mask')" />
         <div class="flex justify-between items-center gap-2 relative">
-          <URange :step="0.05" size="xs" v-model="coverInfoStore.colorAlpha" @change="(e: number) => {
+          <URange :step="0.05" size="xs" v-model="colorAlpha" @change="(e: number) => {
             coverInfoStore.setCoverMarkColor(e)
           }" :min="0" :max="1" />
-          <pick-colors :colors="pickerPreColors" class="cursor-pointer" :value="coverInfoStore.coverMarkColor" @change="($event) => {
-            coverInfoStore.coverMarkColor = $event
-            coverInfoStore.setColorAlpha()
-          }" show-alpha />
+          <pick-colors :colors="pickerPreColors" class="cursor-pointer" :value="coverInfoStore.coverMarkColor" @change="($event: any) => {
+            coverInfoStore.coverMarkColor = $event;
+            coverInfoStore.setColorAlpha();
+          }
+            " show-alpha />
         </div>
 
         <UDivider :label="$t('config.font')" />
@@ -79,7 +118,7 @@ onMounted(() => {
         <UInput v-model="coverInfoStore.coverAuthor" />
 
         <UDivider :label="$t('config.icon')" />
-        <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="iconP">
+        <UTabs :items="positionItems" @change="coverInfoStore.setIconPosition" v-model="iconPI">
           <template #default="{ item }">
             <div class="flex items-center gap-2 relative truncate">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
@@ -90,22 +129,36 @@ onMounted(() => {
             </div>
           </template>
         </UTabs>
-        <UInput v-model="coverInfoStore.iconName"
-          :ui="{ icon: { leading: { pointer: '' }, trailing: { pointer: '' } } }">
-          <template #leading>
-            <UTooltip class="cursor-pointer hover:scale-110" :popper="{ offsetDistance: 16 }" :ui="{ base: 'h-100' }">
-              <template #text>
-                <div class="w-28 text-wrap h-auto">{{ $t('common.icon.search', '点击跳转yesicon搜索icon') }}</div>
-              </template>
-              <Icon name="codicon:go-to-search" @click="openIconUrl('https://yesicon.app/')" />
-            </UTooltip>
-          </template>
-          <template #trailing>
-            <UButton v-show="coverInfoStore.iconName !== ''" color="gray" variant="link"
-              icon="i-heroicons-x-mark-20-solid" :padded="false" @click="coverInfoStore.iconName = ''" />
-          </template>
-        </UInput>
+        <div>
+          <UInput v-model="coverInfoStore.iconName" :ui="{
+            icon: { leading: { pointer: '' }, trailing: { pointer: '' } },
+          }">
+            <template #leading>
+              <Icon class="cursor-pointer hover:scale-110" name="codicon:go-to-search"
+                @click="openIconUrl('https://yesicon.app/')" />
+            </template>
+            <template #trailing>
+              <UButton v-show="coverInfoStore.iconName !== ''" color="gray" variant="link"
+                icon="i-heroicons-x-mark-20-solid" :padded="false" @click="coverInfoStore.iconName = ''" />
+            </template>
+          </UInput>
+          <!-- <div class="text-gray-400 pt-1 text-[12px]">
+            <Icon name="memory:tooltip-above-alert" />
+            {{ $t("common.icon.search", "点击跳转搜索icon") }}
+          </div> -->
+        </div>
       </div>
     </template>
+    <template #foot>
+      <UButton @click="reset">Reset</UButton>
+      <UButton @click="generateCover">Generate Cover</UButton>
+    </template>
   </CoverCardFrame>
+  <UModal v-model="isOpenPreview" :ui="{ width: 'sm:max-w-4xl' }" class="relative">
+    <div class="group/item">
+      <img :src="imgPre" class="select-none" />
+      <Icon size="20" name="grommet-icons:download" @click="downloadImage"
+        class="hover:scale-110 absolute right-2 top-2 text-stone-50 invisible group-hover/item:visible cursor-pointer" />
+    </div>
+  </UModal>
 </template>

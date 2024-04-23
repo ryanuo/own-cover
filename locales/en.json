@@ -1,11 +1,15 @@
 {
   "common.Attribute": "Attribute",
   "common.cover.title": "You must work very hard to appear effortless.",
-  "common.icon.search": "Tap to redirect via yesicon search Icon, then copy the Icon name for Vue mode.",
+  "common.icon.search": "Tap to search Icon, then copy name",
   "config.aspect": "Aspect Ratio",
   "config.mask": "Mask Layer",
   "config.font": "Font",
   "config.text": "Text",
   "config.icon": "Icon",
-  "cover.empty": "The List Of Searched Content Is Empty."
+  "cover.empty": "The List Of Searched Content Is Empty.",
+  "cover.clear": "Confirm to clear the history list?",
+  "cover.clear.confirm": "Confirm",
+  "cover.clear.title": "Clear History List",
+  "cover.clear.cancel": "Cancel"
 }

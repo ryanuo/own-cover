@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  dom-to-image:
+    specifier: ^2.6.0
+    version: 2.6.0
   nuxt:
     specifier: ^3.11.2
     version: 3.11.2(@unocss/reset@0.59.3)(floating-vue@5.2.2)(rollup@4.14.3)(unocss@0.59.3)(vite@5.2.9)
@@ -34,6 +37,9 @@ devDependencies:
   '@nuxtjs/i18n':
     specifier: ^8.3.0
     version: 8.3.0(rollup@4.14.3)(vue@3.4.23)
+  '@pinia-plugin-persistedstate/nuxt':
+    specifier: ^1.2.0
+    version: 1.2.0(@pinia/nuxt@0.5.1)(pinia@2.1.7)(rollup@4.14.3)
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(rollup@4.14.3)(vue@3.4.23)
@@ -1494,6 +1500,21 @@ packages:
       '@parcel/watcher-win32-arm64': 2.4.1
       '@parcel/watcher-win32-ia32': 2.4.1
       '@parcel/watcher-win32-x64': 2.4.1
+
+  /@pinia-plugin-persistedstate/nuxt@1.2.0(@pinia/nuxt@0.5.1)(pinia@2.1.7)(rollup@4.14.3):
+    resolution: {integrity: sha512-2rtgx5viGSMQMCoFYZMHguA2FhFKCUvw0PwETfqQegsWeBHlqk1/D0G/9xqep8Hq+c1BuFx+jNLJzoLXtYfivg==}
+    peerDependencies:
+      '@pinia/nuxt': ^0.5.0
+    dependencies:
+      '@nuxt/kit': 3.11.2(rollup@4.14.3)
+      '@pinia/nuxt': 0.5.1(rollup@4.14.3)(vue@3.4.23)
+      defu: 6.1.4
+      pinia-plugin-persistedstate: 3.2.1(pinia@2.1.7)
+    transitivePeerDependencies:
+      - pinia
+      - rollup
+      - supports-color
+    dev: true
 
   /@pinia/nuxt@0.5.1(rollup@4.14.3)(vue@3.4.23):
     resolution: {integrity: sha512-6wT6TqY81n+7/x3Yhf0yfaJVKkZU42AGqOR0T3+UvChcaOJhSma7OWPN64v+ptYlznat+fS1VTwNAcbi2lzHnw==}
@@ -3360,6 +3381,10 @@ packages:
       domelementtype: 2.3.0
       domhandler: 5.0.3
       entities: 4.5.0
+
+  /dom-to-image@2.6.0:
+    resolution: {integrity: sha512-Dt0QdaHmLpjURjU7Tnu3AgYSF2LuOmksSGsUcE6ItvJoCWTBEmiMXcqBdNSAm9+QbbwD7JMoVsuuKX6ZVQv1qA==}
+    dev: false
 
   /domelementtype@2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
@@ -5348,7 +5373,6 @@ packages:
       pinia: ^2.0.0
     dependencies:
       pinia: 2.1.7(vue@3.4.23)
-    dev: false
 
   /pinia@2.1.7(vue@3.4.23):
     resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}

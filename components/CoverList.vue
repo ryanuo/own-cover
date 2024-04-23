@@ -1,55 +1,34 @@
 <script setup lang="ts">
-import useUnsplash from '~/composables/useUnsplash';
-import Empty from './icon/Empty.vue';
-const getCoverList = useUnsplash()
+import Empty from "./icon/Empty.vue";
 
-const coverInfo = useCoverInfoStore()
+const coverInfo = useCoverInfoStore();
+const tabActive = ref(0);
 const asides: {
-  key: string,
-  label: string
+  key: string;
+  label: string;
 }[] = [
     {
-      key: 'coverList',
-      label: 'Images'
+      key: "coverList",
+      label: "Images",
     },
     {
-      key: 'history_selected_lists',
-      label: 'History'
+      key: "history_selected_lists",
+      label: "History",
     },
-  ]
-
-const search = ref<string>('')
-const loading = ref<boolean>(false)
-
-const queryCoverList = (keyword: string) => {
-  loading.value = true
-  getCoverList.search.getPhotos({
-    query: keyword,
-    page: 1,
-    perPage: 30,
-  })
-    .then((result) => {
-      coverInfo.setCoverList(result?.response?.results || [])
-    }).finally(() => {
-      setTimeout(() => {
-        loading.value = false
-      });
-    });
-}
+  ];
 
 onMounted(() => {
-  queryCoverList('simple')
-})
+  coverInfo.queryCoverList();
+});
 
-const debouncedQuery = useDebounceFn((value) => {
-  coverInfo.coverList = []
-  queryCoverList(value)
-}, 1000)
+const debouncedQuery = useDebounceFn(() => {
+  coverInfo.coverList = [];
+  coverInfo.queryCoverList();
+}, 1000);
 
 const handleClick = () => {
-  if (!search.value.trim()) return;
-  debouncedQuery(search.value)
-}
+  debouncedQuery();
+};
 
 </script>
 <template>
@@ -62,18 +41,19 @@ const handleClick = () => {
       <SwitchLang />
     </template>
     <template #default>
-      <UTabs :items="asides" :ui="{
+      <UTabs :items="asides" v-model="tabActive" :ui="{
         wrapper: 'h-full',
-        container: 'h-[80vh] flex justify-center'
+        container: 'h-[80vh] flex justify-center',
+        base: 'w-full',
       }">
         <template #item="{ item }">
           <div class="flex justify-around w-full flex-wrap h-full overflow-auto scrollbar scrollbar-thin scrollbar-w-8">
-            <div v-if="loading && !coverInfo[item.key].length" class="overflow-hidden">
+            <div v-if="coverInfo.coverLoading && !coverInfo[item.key].length" class="overflow-hidden">
               <USkeleton v-for="i in Array(30)" class="h-4 w-[50vw] my-2" />
             </div>
             <ImageItem v-else-if="coverInfo[item.key].length > 0" v-for="i in coverInfo[item.key]" :image="i" />
             <div v-else class="overflow-hidden flex justify-center items-center w-full">
-              <div class="text-center">
+              <div class="text-center text-sm">
                 <Empty class="m-auto" />
                 {{ $t("cover.empty") }}
               </div>
@@ -83,14 +63,35 @@ const handleClick = () => {
       </UTabs>
     </template>
     <template #foot>
-      <UButton>
-        <Icon name="bi:upload" />
-      </UButton>
-      <UInput v-model="search" class="w-full mx-2" size="xs" color="primary" variant="outline"
-        placeholder="Search..." />
-      <UButton @click="handleClick">
-        <Icon name="ep:search" />
-      </UButton>
+      <template v-if="tabActive === 0">
+        <UButton>
+          <Icon name="bi:upload" />
+        </UButton>
+        <UInput v-model="coverInfo.coverSearchQuery" class="w-full mx-2" size="xs" color="primary" variant="outline"
+          placeholder="Search..." />
+        <UButton @click="handleClick">
+          <Icon name="ep:search" />
+        </UButton>
+      </template>
+      <template v-else>
+        <UPopover class="w-full" :popper="{ placement: 'top-end' }">
+          <UButton class="w-full" :ui="{ base: 'justify-center' }">
+            {{ $t("cover.clear.title") }}
+          </UButton>
+          <template #panel="{ close }">
+            <div class="p-2">{{ $t('cover.clear') }}</div>
+            <div class="flex justify-evenly">
+              <UButton @click="close" class="my-1"> {{ $t('cover.clear.cancel') }}</UButton>
+              <UButton @click="() => {
+                coverInfo.history_selected_lists = [];
+                close();
+              }" class="my-1">
+                {{ $t('cover.clear.confirm') }}
+              </UButton>
+            </div>
+          </template>
+        </UPopover>
+      </template>
     </template>
   </CoverCardFrame>
 </template>

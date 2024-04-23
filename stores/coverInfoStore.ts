@@ -1,5 +1,6 @@
 import tinycolor from "tinycolor2";
 import { aspectRatioOptions, positionItems } from "~/constants/enums";
+
 type CoverImage = {
   id: string;
   previewImg: string;
@@ -25,6 +26,8 @@ interface CoverInfoStore {
   coverList: any;
   previewCoverMap: CoverImage;
   history_selected_lists: CoverImage[];
+  coverLoading: boolean;
+  coverSearchQuery: string;
   [key: string]: any;
 }
 
@@ -60,6 +63,8 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
         "https://unsplash.com/@diegojimenez?utm_source=https://picprose.net&utm_medium=referral",
     },
     history_selected_lists: [],
+    coverLoading: false,
+    coverSearchQuery: "simple",
   }),
   getters: {
     coverIconPosition: (state) => {
@@ -67,6 +72,9 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
       const iconPosition =
         state.iconPosition === 2 ? state.iconPosition : item?.percentages;
       return iconPosition;
+    },
+    getCoverList: () => {
+      return useUnsplash();
     },
   },
   actions: {
@@ -94,6 +102,24 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
         return;
       }
       this.history_selected_lists.unshift(img);
+    },
+    queryCoverList() {
+      const that = this;
+      this.coverLoading = true;
+      that.getCoverList.search
+        .getPhotos({
+          query: that.coverSearchQuery,
+          page: 1,
+          perPage: 30,
+        })
+        .then((result) => {
+          that.setCoverList(result?.response?.results || []);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.coverLoading = false;
+          });
+        });
     },
   },
   persist: process.client && {

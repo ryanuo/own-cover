@@ -1,11 +1,15 @@
 {
   "common.Attribute": "属性",
   "common.cover.title": "你必须非常努力，才能看起来毫不费力！",
-  "common.icon.search": "点击跳转 yesicon 搜索icon,选择Vue模式,复制name到输入框",
+  "common.icon.search": "点击跳转复制",
   "config.aspect": "宽高比",
   "config.mask": "蒙层",
   "config.font": "字体",
   "config.text": "文字",
   "config.icon": "图标",
-  "cover.empty": "搜索的内容列表为空"
+  "cover.empty": "搜索的内容列表为空",
+  "cover.clear": "确认清空历史列表？",
+  "cover.clear.confirm": "清空",
+  "cover.clear.title": "清空历史列表",
+  "cover.clear.cancel": "取消"
 }

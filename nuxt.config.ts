@@ -1,7 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt"],
+  modules: [
+    "@pinia/nuxt",
+    "@nuxt/ui",
+    "@nuxtjs/i18n",
+    "@vueuse/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+  ],
   tailwindcss: {
     exposeConfig: true,
     config: {
