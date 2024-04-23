@@ -11,5 +11,9 @@
   "cover.clear": "Confirm to clear the history list?",
   "cover.clear.confirm": "Confirm",
   "cover.clear.title": "Clear History List",
-  "cover.clear.cancel": "Cancel"
+  "cover.clear.cancel": "Cancel",
+  "cover.config.reset.attribute": "Reset Attribute",
+  "cover.config.generate": "Generate Cover",
+  "cover.config.image": "Images",
+  "cover.config.history": "History"
 }

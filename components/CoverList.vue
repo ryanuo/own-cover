@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import Empty from "./icon/Empty.vue";
-
+const { t } = useI18n();
 const coverInfo = useCoverInfoStore();
 const tabActive = ref(0);
-const asides: {
-  key: string;
-  label: string;
-}[] = [
-    {
-      key: "coverList",
-      label: "Images",
-    },
-    {
-      key: "history_selected_lists",
-      label: "History",
-    },
-  ];
+const asides = reactive([
+  {
+    key: "coverList",
+    label: t("cover.config.image"),
+  },
+  {
+    key: "history_selected_lists",
+    label: t("cover.config.history"),
+  },
+]);
 
 onMounted(() => {
   coverInfo.queryCoverList();
@@ -29,7 +26,6 @@ const debouncedQuery = useDebounceFn(() => {
 const handleClick = () => {
   debouncedQuery();
 };
-
 </script>
 <template>
   <CoverCardFrame>
@@ -47,7 +43,12 @@ const handleClick = () => {
         base: 'w-full',
       }">
         <template #item="{ item }">
-          <div class="flex justify-around w-full flex-wrap h-full overflow-auto scrollbar scrollbar-thin scrollbar-w-8">
+          <div :class="{
+            'flex justify-around w-full flex-wrap': true,
+            'h-full': !coverInfo[item.key].length,
+            'h-auto': coverInfo[item.key].length,
+            'overflow-auto scrollbar scrollbar-thin scrollbar-w-8': true,
+          }">
             <div v-if="coverInfo.coverLoading && !coverInfo[item.key].length" class="overflow-hidden">
               <USkeleton v-for="i in Array(30)" class="h-4 w-[50vw] my-2" />
             </div>
@@ -79,14 +80,16 @@ const handleClick = () => {
             {{ $t("cover.clear.title") }}
           </UButton>
           <template #panel="{ close }">
-            <div class="p-2">{{ $t('cover.clear') }}</div>
+            <div class="p-2">{{ $t("cover.clear") }}</div>
             <div class="flex justify-evenly">
-              <UButton @click="close" class="my-1"> {{ $t('cover.clear.cancel') }}</UButton>
+              <UButton @click="close" class="my-1">
+                {{ $t("cover.clear.cancel") }}</UButton>
               <UButton @click="() => {
-                coverInfo.history_selected_lists = [];
-                close();
-              }" class="my-1">
-                {{ $t('cover.clear.confirm') }}
+                  coverInfo.history_selected_lists = [];
+                  close();
+                }
+                " class="my-1">
+                {{ $t("cover.clear.confirm") }}
               </UButton>
             </div>
           </template>

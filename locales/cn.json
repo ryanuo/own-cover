@@ -11,5 +11,9 @@
   "cover.clear": "确认清空历史列表？",
   "cover.clear.confirm": "清空",
   "cover.clear.title": "清空历史列表",
-  "cover.clear.cancel": "取消"
+  "cover.clear.cancel": "取消",
+  "cover.config.reset.attribute": "重置属性",
+  "cover.config.generate": "生成封面",
+  "cover.config.image": "在线封面",
+  "cover.config.history": "历史记录"
 }

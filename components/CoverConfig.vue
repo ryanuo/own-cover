@@ -17,7 +17,7 @@ const coverInfoStore = useCoverInfoStore();
 const imgPre = ref<string>("");
 const isOpenPreview = ref(false);
 const iconPI = ref(2);
-const textTitle = ref('You must work very hard to app1212ear effortless.')
+const textTitle = ref("You must work very hard to app1212ear effortless.");
 
 const { data, execute, pending }: AsyncData<any> = await useAsyncData(
   "mountains",
@@ -38,22 +38,22 @@ const { data, execute, pending }: AsyncData<any> = await useAsyncData(
     },
   }
 );
-const colorAlpha = ref(0.3)
-const aspectRatio = ref()
+const colorAlpha = ref(0.3);
+const aspectRatio = ref();
 onMounted(() => {
   execute();
   nextTick(() => {
     iconPI.value = coverInfoStore.iconPosition;
-    textTitle.value = coverInfoStore.coverTitle
-    colorAlpha.value = coverInfoStore.colorAlpha
-    aspectRatio.value = coverInfoStore.aspectRatio
+    textTitle.value = coverInfoStore.coverTitle;
+    colorAlpha.value = coverInfoStore.colorAlpha;
+    aspectRatio.value = coverInfoStore.aspectRatio;
   });
 });
 
 const reset = () => {
-  coverInfoStore.$reset()
-  coverInfoStore.queryCoverList()
-}
+  coverInfoStore.$reset();
+  coverInfoStore.queryCoverList();
+};
 
 const generateCover = async () => {
   const ele = document.getElementById("cover-preview-generate");
@@ -73,9 +73,7 @@ function downloadImage() {
   document.body.removeChild(link);
 }
 
-
-const openIconUrl = (url: string) => window.open(url)
-
+const openIconUrl = (url: string) => window.open(url);
 </script>
 <template>
   <CoverCardFrame>
@@ -90,8 +88,8 @@ const openIconUrl = (url: string) => window.open(url)
         <USelectMenu selected-icon="i-heroicons-hand-thumb-up-solid" :uiMenu="{
           select: 'cursor-pointer',
           option: {
-            base: 'cursor-pointer'
-          }
+            base: 'cursor-pointer',
+          },
         }" class="w-full" @change="(val: any) => {
           coverInfoStore.aspectRatio = val;
         }" v-model="aspectRatio" :options="aspectRatioOptions" />
@@ -109,7 +107,10 @@ const openIconUrl = (url: string) => window.open(url)
         </div>
 
         <UDivider :label="$t('config.font')" />
-        <SelectOption :options="data" :pending="pending" v-model:model-value="coverInfoStore.font" />
+        <SelectOption :options="data" :pending="pending" v-model:model-value="coverInfoStore.font">
+          <Icon class="cursor-pointer hover:scale-110" name="codicon:go-to-search"
+            @click="openIconUrl('https://fonts.google.com')" />
+        </SelectOption>
 
         <UDivider :label="$t('config.text')" />
         <UTextarea v-model="textTitle" @input="(e: any) => {
@@ -135,26 +136,24 @@ const openIconUrl = (url: string) => window.open(url)
           }">
             <template #leading>
               <Icon class="cursor-pointer hover:scale-110" name="codicon:go-to-search"
-                @click="openIconUrl('https://yesicon.app/')" />
+                @click="openIconUrl('https://yesicon.app')" />
             </template>
             <template #trailing>
               <UButton v-show="coverInfoStore.iconName !== ''" color="gray" variant="link"
                 icon="i-heroicons-x-mark-20-solid" :padded="false" @click="coverInfoStore.iconName = ''" />
             </template>
           </UInput>
-          <!-- <div class="text-gray-400 pt-1 text-[12px]">
-            <Icon name="memory:tooltip-above-alert" />
-            {{ $t("common.icon.search", "点击跳转搜索icon") }}
-          </div> -->
         </div>
       </div>
     </template>
     <template #foot>
-      <UButton @click="reset">Reset</UButton>
-      <UButton @click="generateCover">Generate Cover</UButton>
+      <UButton @click="reset">{{ $t("cover.config.reset.attribute") }}</UButton>
+      <UButton @click="generateCover">{{
+        $t("cover.config.generate")
+      }}</UButton>
     </template>
   </CoverCardFrame>
-  <UModal v-model="isOpenPreview" :ui="{ width: 'sm:max-w-4xl' }" class="relative">
+  <UModal v-model="isOpenPreview" class="relative">
     <div class="group/item">
       <img :src="imgPre" class="select-none" />
       <Icon size="20" name="grommet-icons:download" @click="downloadImage"
