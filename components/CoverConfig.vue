@@ -20,29 +20,9 @@ const isOpenPreview = ref(false);
 const iconPI = ref(2);
 const textTitle = ref("You must work very hard to app1212ear effortless.");
 
-const { data, execute, pending }: AsyncData<any> = await useAsyncData(
-  "mountains",
-  () =>
-    $fetch(
-      `https://www.googleapis.com/webfonts/v1/webfonts?key=${config?.public.fontapikey}`
-    ),
-  {
-    immediate: false,
-    transform(res: any) {
-      return res.items?.map((item: any) => {
-        return {
-          label: item.family,
-          value: item.menu,
-          files: item.files,
-        };
-      });
-    },
-  }
-);
 const colorAlpha = ref(0.3);
 const aspectRatio = ref();
 onMounted(() => {
-  execute();
   nextTick(() => {
     iconPI.value = coverInfoStore.iconPosition;
     textTitle.value = coverInfoStore.coverTitle;
