@@ -1,85 +1,96 @@
 <script setup lang="ts">
-const coverInfoStore = useCoverInfoStore()
+const coverInfoStore = useCoverInfoStore();
 
-// 更新 @font-face 规则
 const updateFontFace = () => {
-  const fontUrl = coverInfoStore.font.value
-  const fontFamily = coverInfoStore.font.label
-  const fontFiles = coverInfoStore.font.files
+  const fontFace = coverInfoStore.fontLabel;
+  const fontCdn = coverInfoStore.fontCdn;
 
-  // 移除旧的 @font-face 规则
-  const oldFontFace = document?.querySelector('#cover-preview')
-  if (oldFontFace) {
-    oldFontFace.parentNode?.removeChild(oldFontFace)
+  const oldStyle = document.getElementById("cover-preview");
+  if (oldStyle) {
+    oldStyle.remove();
+  }
+  const oldLink = document.getElementById("font-face");
+  if (oldLink) {
+    oldLink.remove();
   }
 
-  // 创建新的 style 元素并设置 @font-face 规则
-  const style = document?.createElement('style')
-  style.id = 'cover-preview'
+  const style = document.createElement("style");
+  style.id = "cover-preview";
+  style.textContent = `
+    :root {
+      --cover-font-family: ${fontFace};
+    }
+  `;
+  document.head.appendChild(style);
 
-  if (fontFiles) {
-    Object.values(fontFiles).forEach((fontFile) => {
-      style.textContent += `
-        @font-face {
-          font-family: '${fontFamily}';
-          src: url('${fontFile}');
-        }
-      `
-    })
-  } else {
-    style.textContent += `
-      @font-face {
-        font-family: '${fontFamily}';
-        src: url('${fontUrl}');
-      }
-    `
-  }
+  const link = document.createElement("link");
+  link.id = "font-face";
+  link.rel = "stylesheet";
+  link.href = fontCdn.replace("%s", fontFace);
+  console.log(link.href);
+  document.head.appendChild(link);
+};
 
-  style.textContent += `
-  :root{
-    --cover-font-family: '${fontFamily}';
-  }`
-
-  // 将 style 元素添加到文档头部
-  document.head.appendChild(style)
-}
-
-const coverInfo = ref()
+const coverInfo = ref();
 onMounted(() => {
-  coverInfo.value = coverInfoStore
-})
+  coverInfo.value = coverInfoStore;
+});
 
-// 监听 coverInfoStore.font 的变化
-watch(() => coverInfoStore.font, () => {
-  if (coverInfoStore.font.label && document) {
-    setTimeout(() => {
-      updateFontFace()
-    });
+watch(
+  () => [coverInfoStore.fontCdn, coverInfoStore.fontLabel],
+  () => {
+    if (coverInfoStore.fontLabel && coverInfoStore.fontCdn && document) {
+      updateFontFace();
+    }
+  },
+  {
+    immediate: true,
   }
-}, { immediate: true })
-
+);
 </script>
 <template>
   <div
-    class="cover-preview-font flex-auto bg-gray-100 overflow-x-auto flex items-center rounded-md scrollbar scrollbar-thin scrollbar-w-8">
-    <div class="m-auto rounded-md flex items-center justify-center min-w-[800px]">
+    class="cover-preview-font flex-auto bg-gray-100 overflow-x-auto flex items-center rounded-md scrollbar scrollbar-thin scrollbar-w-8"
+  >
+    <div
+      class="m-auto rounded-md flex items-center justify-center min-w-[800px]"
+    >
       <div id="cover-preview-generate" class="relative" v-if="coverInfo">
-        <div class="max-h-[90vh]" :style="{
-          aspectRatio: coverInfo.aspectRatio.value
-        }">
-          <img :src="coverInfo.previewCoverMap?.previewImg" class="rounded-md object-cover w-full h-full" />
+        <div
+          class="max-h-[90vh]"
+          :style="{
+            aspectRatio: coverInfo.aspectRatio.value,
+          }"
+        >
+          <img
+            :src="coverInfo.previewCoverMap?.previewImg"
+            class="rounded-md object-cover w-full h-full"
+          />
         </div>
-        <div class="text-white absolute top-0 left-0 right-0 h-full rounded-md flex items-center justify-center"
-          :style="{ backgroundColor: coverInfo.coverMarkColor }">
+        <div
+          class="text-white absolute top-0 left-0 right-0 h-full rounded-md flex items-center justify-center"
+          :style="{ backgroundColor: coverInfo.coverMarkColor }"
+        >
           <div class="text-center">
             <h4 class="font-bold text-4xl px-5 p-4 text-center leading-tight">
               {{ coverInfo.coverTitle }}
             </h4>
-            <div class="text-center mt-6 mb-4 text-2xl font-semibold">{{ coverInfo.coverAuthor }}</div>
-            <Icon size="32" :name="coverInfo.iconName" v-if="coverInfo.iconPosition === 2" />
+            <div class="text-center mt-6 mb-4 text-2xl font-semibold">
+              {{ coverInfo.coverAuthor }}
+            </div>
+            <Icon
+              size="32"
+              :name="coverInfo.iconName"
+              v-if="coverInfo.iconPosition === 2"
+            />
           </div>
-          <Icon size="32" class="absolute" :style="coverInfo.coverIconPosition" :name="coverInfo.iconName"
-            v-if="coverInfo.iconPosition !== 2" />
+          <Icon
+            size="32"
+            class="absolute"
+            :style="coverInfo.coverIconPosition"
+            :name="coverInfo.iconName"
+            v-if="coverInfo.iconPosition !== 2"
+          />
         </div>
       </div>
     </div>

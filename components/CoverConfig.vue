@@ -131,17 +131,15 @@ const openIconUrl = (url: string) => window.open(url);
         </div>
 
         <UDivider :label="$t('config.font', 'Font')" />
-        <SelectOption
-          :options="data"
-          :pending="pending"
-          v-model:model-value="coverInfoStore.font"
-        >
-          <Icon
-            class="cursor-pointer hover:scale-110"
-            name="codicon:go-to-search"
-            @click="openIconUrl('https://fonts.google.com')"
-          />
-        </SelectOption>
+
+        <UInput
+          v-model="coverInfoStore.fontCdn"
+          @change="coverInfoStore.fontCdn = $event"
+        />
+        <UInput
+          v-model="coverInfoStore.fontLabel"
+          @change="coverInfoStore.fontLabel = $event"
+        />
 
         <UDivider :label="$t('config.text', 'Text')" />
         <UTextarea

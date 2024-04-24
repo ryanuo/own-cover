@@ -18,11 +18,8 @@ interface CoverInfoStore {
   coverMarkColor: string;
   colorAlpha: number;
   aspectRatio: any;
-  font: {
-    label: string;
-    value: string;
-    files?: Record<string, string>;
-  };
+  fontLabel: string;
+  fontCdn: string;
   coverList: any;
   previewCoverMap: CoverImage;
   history_selected_lists: CoverImage[];
@@ -40,15 +37,8 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     coverMarkColor: "rgba(0, 0, 0, 0.3)",
     colorAlpha: 0.3,
     aspectRatio: aspectRatioOptions[2],
-    font: {
-      label: "ADLaM Display",
-      value:
-        "https://fonts.gstatic.com/s/adlamdisplay/v1/KFOhCnGXkPOLlhx6jD8_b1ZEOsDSlQ.ttf",
-      files: {
-        regular:
-          "https://fonts.gstatic.com/s/adlamdisplay/v1/KFOhCnGXkPOLlhx6jD8_b1ZECsHYkYBPY3o.ttf",
-      },
-    },
+    fontLabel: "ADLaM Display",
+    fontCdn: "https://fonts.googleapis.com/css?family=",
     coverList: [],
     previewCoverMap: {
       id: "A-NVHPka9Rk",
