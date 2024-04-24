@@ -13,7 +13,6 @@ import {
   positionItems,
 } from "~/constants/enums";
 
-const config = useRuntimeConfig();
 const coverInfoStore = useCoverInfoStore();
 const imgPre = ref<string>("");
 const isOpenPreview = ref(false);
@@ -37,12 +36,26 @@ const reset = () => {
 };
 
 const generateCover = async () => {
+  isOpenPreview.value = true;
+
   const ele = document.getElementById("cover-preview-generate");
   domToImg.toPng(ele).then((dataUrl: string) => {
     imgPre.value = dataUrl;
-    isOpenPreview.value = true;
   });
 };
+
+watch(isOpenPreview, () => {
+  if (!isOpenPreview.value) {
+    imgPre.value = "";
+  }
+});
+
+watchDeep(
+  () => [coverInfoStore.colorAlpha],
+  () => {
+    colorAlpha.value = coverInfoStore.colorAlpha;
+  }
+);
 
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD-HH-mm-ss");
 function downloadImage() {
@@ -102,8 +115,7 @@ const openIconUrl = (url: string) => window.open(url);
             class="cursor-pointer"
             :value="coverInfoStore.coverMarkColor"
             @change="($event: any) => {
-            coverInfoStore.coverMarkColor = $event;
-            coverInfoStore.setColorAlpha();
+            coverInfoStore.setColorAlpha($event);
           }
             "
             show-alpha
@@ -197,7 +209,13 @@ const openIconUrl = (url: string) => window.open(url);
   </CoverCardFrame>
   <UModal v-model="isOpenPreview" class="relative">
     <div class="group/item">
-      <img :src="imgPre" class="select-none" />
+      <img v-if="imgPre" :src="imgPre" class="select-none" />
+      <template v-else-if="!imgPre && isOpenPreview">
+        <div class="text-center m-5">
+          <Icon name="line-md:loading-twotone-loop" />
+          {{ $t("cover.config.loading", "Cover Generating, please wait....") }}
+        </div>
+      </template>
       <Icon
         size="20"
         name="grommet-icons:download"

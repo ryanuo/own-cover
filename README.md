@@ -18,9 +18,10 @@ This is a simple web app that allows you to upload an image and get a cover of y
 - [x] Support API server-side cover generation.
 - [x] Download the cover.
 
-Font CDN:
+Google Font CDN:
 - https://fonts.googleapis.com/css?family=%s
 - https://fonts.loli.net/css?family=%s
+
 `%s` is the fontfamily placeholder
 ## Usage
 

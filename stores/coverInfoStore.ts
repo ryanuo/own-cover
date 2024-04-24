@@ -71,8 +71,9 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     setIconPosition(position: number) {
       this.iconPosition = position;
     },
-    setColorAlpha() {
-      this.colorAlpha = tinycolor(this.coverMarkColor).getAlpha().toFixed(2);
+    setColorAlpha(str: string) {
+      this.coverMarkColor = str;
+      this.colorAlpha = tinycolor(str).getAlpha().toFixed(2);
     },
     setCoverMarkColor(e: number) {
       const color = tinycolor(this.coverMarkColor);

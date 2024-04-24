@@ -26,8 +26,8 @@ const updateFontFace = () => {
   const link = document.createElement("link");
   link.id = "font-face";
   link.rel = "stylesheet";
+  link.crossOrigin = "anonymous";
   link.href = fontCdn.replace("%s", fontFace);
-  console.log(link.href);
   document.head.appendChild(link);
 };
 
