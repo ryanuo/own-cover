@@ -38,7 +38,7 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     colorAlpha: 0.3,
     aspectRatio: aspectRatioOptions[2],
     fontLabel: "ADLaM Display",
-    fontCdn: "https://fonts.googleapis.com/css?family=",
+    fontCdn: "https://fonts.googleapis.com/css?family=%s",
     coverList: [],
     previewCoverMap: {
       id: "A-NVHPka9Rk",
