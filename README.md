@@ -1,6 +1,6 @@
 ## Own Cover
 
-< img src="public\logo.png" width="80" height="80" />
+<img src="public\logo.png" width="80" height="80" />
 
 > [!NOTE]
 > Still In Development
@@ -70,8 +70,8 @@ Vercel
 contributions of all forms are welcome including but not limited to beautifying the interface adding features improving the code fixing bugs etc.
 
 <a href=" ">
-  < img src="https://contrib.rocks/image?repo=rr210/own-cover" />
-</a >
+  <img src="https://contrib.rocks/image?repo=rr210/own-cover" />
+</a>
 
 ## License
 
