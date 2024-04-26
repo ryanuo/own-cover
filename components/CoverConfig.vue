@@ -35,13 +35,29 @@ const reset = () => {
   coverInfoStore.queryCoverList();
 };
 
+function downloadImage() {
+  const link = document.createElement("a");
+  link.href = imgPre.value;
+  link.download = formatted.value + ".png";
+  document.body.appendChild(link); // 添加到文档以确保能够被点击
+  link.click();
+  document.body.removeChild(link);
+}
+
 const generateCover = async () => {
   isOpenPreview.value = true;
 
   const ele = document.getElementById("cover-preview-generate");
-  domToImg.toPng(ele).then((dataUrl: string) => {
-    imgPre.value = dataUrl;
-  });
+  domToImg
+    .toPng(ele)
+    .then((dataUrl: string) => {
+      imgPre.value = dataUrl;
+      downloadImage();
+    })
+    .finally(() => {
+      isOpenPreview.value = false;
+      imgPre.value = "";
+    });
 };
 
 watch(isOpenPreview, () => {
@@ -58,14 +74,6 @@ watchDeep(
 );
 
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD-HH-mm-ss");
-function downloadImage() {
-  const link = document.createElement("a");
-  link.href = imgPre.value;
-  link.download = formatted.value + ".png";
-  document.body.appendChild(link); // 添加到文档以确保能够被点击
-  link.click();
-  document.body.removeChild(link);
-}
 
 const openIconUrl = (url: string) => window.open(url);
 </script>

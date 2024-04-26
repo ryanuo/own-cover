@@ -27,5 +27,10 @@
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
     "tailwind-scrollbar": "^3.1.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "dom-to-image@2.6.0": "patches/dom-to-image@2.6.0.patch"
+    }
   }
 }

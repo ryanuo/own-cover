@@ -4,10 +4,15 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  dom-to-image@2.6.0:
+    hash: 7e4b5z6fznr43bgesztmpbthfa
+    path: patches/dom-to-image@2.6.0.patch
+
 dependencies:
   dom-to-image:
     specifier: ^2.6.0
-    version: 2.6.0
+    version: 2.6.0(patch_hash=7e4b5z6fznr43bgesztmpbthfa)
   nuxt:
     specifier: ^3.11.2
     version: 3.11.2(@unocss/reset@0.59.3)(floating-vue@5.2.2)(rollup@4.14.3)(unocss@0.59.3)(vite@5.2.9)
@@ -3382,9 +3387,10 @@ packages:
       domhandler: 5.0.3
       entities: 4.5.0
 
-  /dom-to-image@2.6.0:
+  /dom-to-image@2.6.0(patch_hash=7e4b5z6fznr43bgesztmpbthfa):
     resolution: {integrity: sha512-Dt0QdaHmLpjURjU7Tnu3AgYSF2LuOmksSGsUcE6ItvJoCWTBEmiMXcqBdNSAm9+QbbwD7JMoVsuuKX6ZVQv1qA==}
     dev: false
+    patched: true
 
   /domelementtype@2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}

@@ -1,0 +1,26 @@
+diff --git a/.npmignore b/.npmignore
+deleted file mode 100644
+index d116ed21e0818d7d494bf510ff66f846bb58a169..0000000000000000000000000000000000000000
+diff --git a/bower_components/fontawesome/.npmignore b/bower_components/fontawesome/.npmignore
+deleted file mode 100644
+index 54a691f81598172c378f35c30774b0d428294d37..0000000000000000000000000000000000000000
+diff --git a/src/dom-to-image.js b/src/dom-to-image.js
+index 27201ac9332e29d052ebeda5cebdf8af0cee4c5b..ce6c414ff4e3813690ed817a8ff9edc5ff38215b 100644
+--- a/src/dom-to-image.js
++++ b/src/dom-to-image.js
+@@ -154,8 +154,13 @@
+             .then(util.makeImage)
+             .then(util.delay(100))
+             .then(function (image) {
+-                var canvas = newCanvas(domNode);
+-                canvas.getContext('2d').drawImage(image, 0, 0);
++		             var canvas = newCanvas(domNode);
++                let context = canvas.getContext('2d');
++                const ratio = window.devicePixelRatio || 1;
++                canvas.width *= ratio;
++                canvas.height *= ratio;
++                context.scale(ratio, ratio);
++                context.drawImage(image, 0, 0);
+                 return canvas;
+             });
+ 
