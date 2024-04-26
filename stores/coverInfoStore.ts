@@ -112,6 +112,18 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
           });
         });
     },
+    setCoverImgMap(image: any) {
+      const img = {
+        id: image.id,
+        previewImg: image.urls.regular,
+        username: image.user.name,
+        username_avatar: image.user.profile_image?.small,
+        profile: `${image.user.links.html}?utm_source=https://picprose.net&utm_medium=referral`,
+        downLoad_path: image.links.download_location,
+      };
+      this.setCoverImage(img);
+      this.setHistorySelected(image);
+    },
   },
   persist: process.client && {
     storage: localStorage,

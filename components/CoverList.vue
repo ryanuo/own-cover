@@ -26,6 +26,40 @@ const debouncedQuery = useDebounceFn(() => {
 const handleClick = () => {
   debouncedQuery();
 };
+
+const onFileChange = (e: Event) => {
+  const files = (e.target as HTMLInputElement).files;
+  if (files && files.length > 0) {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      if (result && typeof result === "string") {
+        coverInfo.setCoverImgMap({
+          id: new Date().getTime(),
+          urls: {
+            small: result,
+            regular: result,
+          },
+          user: {
+            name: "Ryanco",
+            profile_image: {
+              small: "https://avatars.githubusercontent.com/u/66169324?v=4",
+            },
+            links: {
+              html: "https://github.com/rr210",
+              self: "https://unsplash.com/developers",
+            },
+          },
+          links: {
+            download_location: "https://github.com/rr210",
+          },
+        });
+      }
+    };
+  }
+};
 </script>
 <template>
   <CoverCardFrame>
@@ -76,8 +110,16 @@ const handleClick = () => {
     </template>
     <template #foot>
       <template v-if="tabActive === 0">
-        <UButton>
+        <UButton class="relative">
           <Icon name="bi:upload" />
+          <input
+            type="file"
+            value=""
+            class="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer text-[0px]"
+            @change="onFileChange"
+            :multiple="false"
+            accept=".png,.jpg,.jpeg"
+          />
         </UButton>
         <UInput
           v-model="coverInfo.coverSearchQuery"
