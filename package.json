@@ -10,7 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "dom-to-image": "^2.6.0",
+    "jimp": "^0.22.12",
     "nuxt": "^3.11.2",
     "pinia-plugin-persistedstate": "^3.2.1",
     "tinycolor2": "^1.6.0",
