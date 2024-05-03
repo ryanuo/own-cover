@@ -76,9 +76,8 @@ watchDeep(
 watch(
   () => coverInfoStore.iconName,
   (newVal) => {
-    if (newVal) {
+    if (newVal !== "") {
       coverInfoStore.iconName = newVal;
-    } else {
       coverInfoStore.iconImage = "";
     }
   }
