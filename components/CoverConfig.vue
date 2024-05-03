@@ -73,9 +73,36 @@ watchDeep(
   }
 );
 
+watch(
+  () => coverInfoStore.iconName,
+  (newVal) => {
+    if (newVal) {
+      coverInfoStore.iconName = newVal;
+    } else {
+      coverInfoStore.iconImage = "";
+    }
+  }
+);
+
 const formatted = useDateFormat(useNow(), "YYYY-MM-DD-HH-mm-ss");
 
 const openIconUrl = (url: string) => window.open(url);
+
+const onFileChange = (e: Event) => {
+  const files = (e.target as HTMLInputElement).files;
+  if (files && files.length > 0) {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      if (result && typeof result === "string") {
+        coverInfoStore.iconImage = result;
+        coverInfoStore.iconName = "";
+      }
+    };
+  }
+};
 </script>
 <template>
   <CoverCardFrame>
@@ -88,7 +115,9 @@ const openIconUrl = (url: string) => window.open(url);
       />
     </template>
     <template #default>
-      <div class="flex flex-col gap-5 p-1">
+      <div
+        class="flex flex-col gap-5 p-1 overflow-auto h-full scrollbar scrollbar-thin scrollbar-w-8"
+      >
         <UDivider :label="$t('config.aspect', 'Aspect Ratio')" />
         <USelectMenu
           selected-icon="i-heroicons-hand-thumb-up-solid"
@@ -178,8 +207,9 @@ const openIconUrl = (url: string) => window.open(url);
             </div>
           </template>
         </UTabs>
-        <div>
+        <div class="flex items-center gap-1 justify-between">
           <UInput
+            class="w-full"
             v-model="coverInfoStore.iconName"
             :ui="{
               icon: { leading: { pointer: '' }, trailing: { pointer: '' } },
@@ -203,6 +233,17 @@ const openIconUrl = (url: string) => window.open(url);
               />
             </template>
           </UInput>
+          <UButton class="relative">
+            <Icon name="bi:upload" />
+            <input
+              type="file"
+              value=""
+              class="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer text-[0px]"
+              @change="onFileChange"
+              :multiple="false"
+              accept=".png,.jpg,.jpeg"
+            />
+          </UButton>
         </div>
       </div>
     </template>

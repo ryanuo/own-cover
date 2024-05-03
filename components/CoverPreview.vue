@@ -78,18 +78,19 @@ watch(
             <div class="text-center mt-6 mb-4 text-2xl font-semibold">
               {{ coverInfo.coverAuthor }}
             </div>
-            <Icon
-              size="32"
-              :name="coverInfo.iconName"
-              v-if="coverInfo.iconPosition === 2"
+            <CustomCoverIcon
+              :icon-name="coverInfo.iconName"
+              :icon-image="coverInfo.iconImage"
+              :icon-position="coverInfo.iconPosition"
+              :cover-icon-position="coverInfo.coverIconPosition"
             />
           </div>
-          <Icon
-            size="32"
-            class="absolute"
-            :style="coverInfo.coverIconPosition"
-            :name="coverInfo.iconName"
+          <CustomCoverIcon
             v-if="coverInfo.iconPosition !== 2"
+            :icon-name="coverInfo.iconName"
+            :icon-image="coverInfo.iconImage"
+            :icon-position="coverInfo.iconPosition"
+            :cover-icon-position="coverInfo.coverIconPosition"
           />
         </div>
       </div>

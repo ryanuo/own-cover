@@ -25,6 +25,7 @@ interface CoverInfoStore {
   history_selected_lists: CoverImage[];
   coverLoading: boolean;
   coverSearchQuery: string;
+  iconImage: string;
   [key: string]: any;
 }
 
@@ -55,6 +56,7 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     history_selected_lists: [],
     coverLoading: false,
     coverSearchQuery: "simple",
+    iconImage: "",
   }),
   getters: {
     coverIconPosition: (state) => {
