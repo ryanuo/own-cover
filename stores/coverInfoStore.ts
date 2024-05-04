@@ -68,6 +68,12 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
     getCoverList: () => {
       return useUnsplash();
     },
+    customAspectRatio: (state) => {
+      return {
+        left: state.aspectRatio.value.split(" / ")[0] ?? 1,
+        right: state.aspectRatio.value.split(" / ")[1] ?? 1,
+      };
+    },
   },
   actions: {
     setIconPosition(position: number) {
@@ -125,6 +131,12 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
       };
       this.setCoverImage(img);
       this.setHistorySelected(image);
+    },
+    setAspectRatioCustom(params: { left?: number; right?: number }) {
+      const aspectRatio = this.aspectRatio.value.split(" / ");
+      const leftVal = params.left ?? aspectRatio[0];
+      const rightVal = params.right ?? aspectRatio[1];
+      this.aspectRatio.value = `${leftVal} / ${rightVal}`;
     },
   },
   persist: process.client && {

@@ -58,8 +58,6 @@ pnpm run dev
 - [dom-to-image](https://github.com/tsayen/dom-to-image)
 - [tinycolor2](https://github.com/bgrins/TinyColor)
 - [vue-pick-colors](https://github.com/qiuzongyuan/vue-pick-colors)
-- [sharp](https://github.com/lovell/sharp)
-- [node-canvas](https://github.com/Automattic/node-canvas)
 
 ## Build
 Netlify

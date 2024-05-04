@@ -93,7 +93,7 @@ export const aspectRatioOptions = [
   },
   {
     label: "Customize",
-    value: "Customize",
+    value: "1 / 1",
   },
 ];
 import tinycolor from "tinycolor2";

@@ -134,6 +134,33 @@ const onFileChange = (e: Event) => {
           :options="aspectRatioOptions"
         />
 
+        <div
+          v-if="aspectRatio?.label === 'Customize'"
+          class="flex justify-between items-center gap-2"
+        >
+          <UInput
+            type="number"
+            size="sm"
+            v-model="coverInfoStore.customAspectRatio.left"
+            @change="(val: number) => {
+            coverInfoStore.setAspectRatioCustom({
+              left:val
+            });
+          }"
+          />
+          /
+          <UInput
+            type="number"
+            size="sm"
+            v-model="coverInfoStore.customAspectRatio.right"
+            @change="(val: number) => {
+            coverInfoStore.setAspectRatioCustom({
+              right:val
+            });
+          }"
+          />
+        </div>
+
         <UDivider :label="$t('config.mask', 'Mask Layer')" />
         <div class="flex justify-between items-center gap-2 relative">
           <URange
