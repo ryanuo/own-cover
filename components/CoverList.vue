@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Empty from "./icon/Empty.vue";
+
 const { t } = useI18n();
 const coverInfo = useCoverInfoStore();
 const tabActive = ref(0);
@@ -60,6 +60,7 @@ const onFileChange = (e: Event) => {
     };
   }
 };
+
 </script>
 <template>
   <CoverCardFrame>
@@ -71,40 +72,13 @@ const onFileChange = (e: Event) => {
       <SwitchLang />
     </template>
     <template #default>
-      <UTabs
-        :items="asides"
-        v-model="tabActive"
-        :ui="{
-          wrapper: 'h-full',
-          container: 'h-[80vh] flex justify-center',
-          base: 'w-full',
-        }"
-      >
+      <UTabs :items="asides" v-model="tabActive" :ui="{
+        wrapper: 'h-full',
+        container: 'h-[80vh] flex justify-center',
+        base: 'w-full',
+      }">
         <template #item="{ item }">
-          <div
-            class="flex justify-between content-start w-full h-full flex-wrap overflow-auto scrollbar scrollbar-thin scrollbar-w-8"
-          >
-            <div
-              v-if="coverInfo.coverLoading && !coverInfo[item.key].length"
-              class="overflow-hidden"
-            >
-              <USkeleton v-for="i in Array(30)" class="h-4 w-[50vw] my-2" />
-            </div>
-            <ImageItem
-              v-else-if="coverInfo[item.key].length > 0"
-              v-for="i in coverInfo[item.key]"
-              :image="i"
-            />
-            <div
-              v-else
-              class="overflow-hidden flex justify-center items-center w-full"
-            >
-              <div class="text-center text-sm">
-                <Empty class="m-auto mt-10" />
-                {{ $t("cover.empty", "empty") }}
-              </div>
-            </div>
-          </div>
+          <CustomImageList :item="item" />
         </template>
       </UTabs>
     </template>
@@ -112,23 +86,11 @@ const onFileChange = (e: Event) => {
       <template v-if="tabActive === 0">
         <UButton class="relative">
           <Icon name="bi:upload" />
-          <input
-            type="file"
-            value=""
-            class="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer text-[0px]"
-            @change="onFileChange"
-            :multiple="false"
-            accept=".png,.jpg,.jpeg"
-          />
+          <input type="file" value="" class="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer text-[0px]"
+            @change="onFileChange" :multiple="false" accept=".png,.jpg,.jpeg" />
         </UButton>
-        <UInput
-          v-model="coverInfo.coverSearchQuery"
-          class="w-full mx-2"
-          size="xs"
-          color="primary"
-          variant="outline"
-          placeholder="Search..."
-        />
+        <UInput v-model="coverInfo.coverSearchQuery" class="w-full mx-2" size="xs" color="primary" variant="outline"
+          placeholder="Search..." />
         <UButton @click="handleClick">
           <Icon name="ep:search" />
         </UButton>
@@ -144,17 +106,12 @@ const onFileChange = (e: Event) => {
             </div>
             <div class="flex justify-evenly">
               <UButton @click="close" class="my-1">
-                {{ $t("cover.clear.cancel", "cancel") }}</UButton
-              >
-              <UButton
-                @click="
-                  () => {
-                    coverInfo.history_selected_lists = [];
-                    close();
-                  }
-                "
-                class="my-1"
-              >
+                {{ $t("cover.clear.cancel", "cancel") }}</UButton>
+              <UButton @click="() => {
+                coverInfo.history_selected_lists = [];
+                close();
+              }
+                " class="my-1">
                 {{ $t("cover.clear.confirm", "confirm") }}
               </UButton>
             </div>

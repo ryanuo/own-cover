@@ -18,16 +18,20 @@
     "tinycolor2": "^1.6.0",
     "unsplash-js": "^7.0.19",
     "vue": "^3.4.21",
+    "vue-photo-album": "^1.2.4",
     "vue-pick-colors": "^1.6.5",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.18.1",
+    "@nuxt/eslint": "^0.3.13",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
     "@nuxtjs/i18n": "^8.3.0",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
+    "eslint": "^9.3.0",
     "tailwind-scrollbar": "^3.1.0"
   },
   "pnpm": {

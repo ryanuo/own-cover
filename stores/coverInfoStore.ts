@@ -112,7 +112,10 @@ export const useCoverInfoStore = defineStore("coverInfoStore", {
           perPage: 30,
         })
         .then((result) => {
-          that.setCoverList(result?.response?.results || []);
+          that.setCoverList(result?.response?.results?.map(item => ({
+            ...item,
+            src: item.urls.small
+          })) || []);
         })
         .finally(() => {
           setTimeout(() => {

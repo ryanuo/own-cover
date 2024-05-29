@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
+    '@nuxt/eslint',
   ],
   tailwindcss: {
     exposeConfig: true,
@@ -51,7 +52,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       unsplashapikey: process.env.NEXT_PUBLIC_UNSPLASHAPIKEY,
-      fontapikey: process.env.NEXT_PUBLIC_FONTAPIKEY,
     },
   },
 });
