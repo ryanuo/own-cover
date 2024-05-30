@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindScrollbar from 'tailwind-scrollbar'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -12,7 +14,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     exposeConfig: true,
     config: {
-      plugins: [import('tailwind-scrollbar')],
+      plugins: [tailwindScrollbar],
       theme: {
         extend: {
           colors: {
