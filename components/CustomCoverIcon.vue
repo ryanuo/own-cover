@@ -5,15 +5,16 @@ defineProps({
   iconImage: String,
   iconPosition: Number,
   coverIconPosition: String, // 这应该是样式字符串
-});
+})
 </script>
+
 <template>
   <Icon
     v-if="iconName"
     size="32"
     :class="{
       'inline-block': iconPosition === 2,
-      absolute: iconPosition !== 2,
+      'absolute': iconPosition !== 2,
     }"
     :name="iconName"
     :style="iconPosition !== 2 ? coverIconPosition : ''"
@@ -21,10 +22,9 @@ defineProps({
   <img
     v-if="iconImage"
     :src="iconImage"
-    :class="{
-      'w-8 h-8 inline-block': true,
+    class="w-8 h-8 inline-block" :class="{
       absolute: iconPosition !== 2,
     }"
     :style="iconPosition !== 2 ? coverIconPosition : ''"
-  />
+  >
 </template>

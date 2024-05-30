@@ -4,12 +4,15 @@ defineProps({
     type: Object,
     required: true,
   },
-});
-const coverInfo = useCoverInfoStore();
+})
+const coverInfo = useCoverInfoStore()
 </script>
+
 <template>
   <div class="w-[44%] h-24 m-2">
-    <img @click="() => coverInfo.setCoverImgMap(image)" :src="image.urls?.small"
-      class="transition-transform duration-200 transform hover:scale-105 rounded cursor-pointer object-cover w-full h-24" />
+    <img
+      :src="image.urls?.small" class="transition-transform duration-200 transform hover:scale-105 rounded cursor-pointer object-cover w-full h-24"
+      @click="() => coverInfo.setCoverImgMap(image)"
+    >
   </div>
 </template>

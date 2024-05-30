@@ -1,9 +1,11 @@
 <template>
   <NuxtPage />
 </template>
+
 <style>
 :root {
-  --cover-font-family: 'Caesar Dressing', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --cover-font-family: 'Caesar Dressing', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
 }
 
 body {

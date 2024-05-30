@@ -1,7 +1,7 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,10 +11,11 @@
   },
   "dependencies": {
     "axios": "^1.6.8",
+    "canvas": "^2.11.2",
     "dom-to-image": "^2.6.0",
-    "jimp": "^0.22.12",
     "nuxt": "^3.11.2",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "sharp": "^0.33.4",
     "tinycolor2": "^1.6.0",
     "unsplash-js": "^7.0.19",
     "vue": "^3.4.21",
@@ -32,6 +33,7 @@
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
     "eslint": "^9.3.0",
+    "eslint-plugin-format": "^0.1.1",
     "tailwind-scrollbar": "^3.1.0"
   },
   "pnpm": {

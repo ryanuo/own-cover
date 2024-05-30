@@ -1,112 +1,107 @@
 <script setup lang="ts">
-interface AsyncData<T> {
-  data: T | null;
-  execute: () => Promise<void>;
-  pending: Ref<boolean>;
-}
-
-import domToImg from "dom-to-image";
-import PickColors from "vue-pick-colors";
+import domToImg from 'dom-to-image'
+import PickColors from 'vue-pick-colors'
 import {
   aspectRatioOptions,
   pickerPreColors,
   positionItems,
-} from "~/constants/enums";
+} from '~/constants/enums'
 
-const coverInfoStore = useCoverInfoStore();
-const imgPre = ref<string>("");
-const isOpenPreview = ref(false);
-const iconPI = ref(2);
-const textTitle = ref("You must work very hard to app1212ear effortless.");
+const coverInfoStore = useCoverInfoStore()
+const imgPre = ref<string>('')
+const isOpenPreview = ref(false)
+const iconPI = ref(2)
+const textTitle = ref('You must work very hard to app1212ear effortless.')
+const formatted = useDateFormat(useNow(), 'YYYY-MM-DD-HH-mm-ss')
 
-const colorAlpha = ref(0.3);
-const aspectRatio = ref();
+const colorAlpha = ref(0.3)
+const aspectRatio = ref()
 onMounted(() => {
   nextTick(() => {
-    iconPI.value = coverInfoStore.iconPosition;
-    textTitle.value = coverInfoStore.coverTitle;
-    colorAlpha.value = coverInfoStore.colorAlpha;
-    aspectRatio.value = coverInfoStore.aspectRatio;
-  });
-});
+    iconPI.value = coverInfoStore.iconPosition
+    textTitle.value = coverInfoStore.coverTitle
+    colorAlpha.value = coverInfoStore.colorAlpha
+    aspectRatio.value = coverInfoStore.aspectRatio
+  })
+})
 
-const reset = () => {
-  coverInfoStore.$reset();
-  coverInfoStore.queryCoverList();
-};
-
-function downloadImage() {
-  const link = document.createElement("a");
-  link.href = imgPre.value;
-  link.download = formatted.value + ".png";
-  document.body.appendChild(link); // 添加到文档以确保能够被点击
-  link.click();
-  document.body.removeChild(link);
+function reset() {
+  coverInfoStore.$reset()
+  coverInfoStore.queryCoverList()
 }
 
-const generateCover = async () => {
-  isOpenPreview.value = true;
+function downloadImage() {
+  const link = document.createElement('a')
+  link.href = imgPre.value
+  link.download = `${formatted.value}.png`
+  document.body.appendChild(link) // 添加到文档以确保能够被点击
+  link.click()
+  document.body.removeChild(link)
+}
 
-  const ele = document.getElementById("cover-preview-generate");
+async function generateCover() {
+  isOpenPreview.value = true
+
+  const ele = document.getElementById('cover-preview-generate')
   domToImg
     .toPng(ele)
     .then((dataUrl: string) => {
-      imgPre.value = dataUrl;
-      downloadImage();
+      imgPre.value = dataUrl
+      downloadImage()
     })
     .finally(() => {
-      isOpenPreview.value = false;
-      imgPre.value = "";
-    });
-};
+      isOpenPreview.value = false
+      imgPre.value = ''
+    })
+}
 
 watch(isOpenPreview, () => {
-  if (!isOpenPreview.value) {
-    imgPre.value = "";
-  }
-});
+  if (!isOpenPreview.value)
+    imgPre.value = ''
+})
 
 watchDeep(
   () => [coverInfoStore.colorAlpha],
   () => {
-    colorAlpha.value = coverInfoStore.colorAlpha;
-  }
-);
+    colorAlpha.value = coverInfoStore.colorAlpha
+  },
+)
 
 watch(
   () => coverInfoStore.iconName,
   (newVal) => {
-    if (newVal !== "") {
-      coverInfoStore.iconName = newVal;
-      coverInfoStore.iconImage = "";
+    if (newVal !== '') {
+      coverInfoStore.iconName = newVal
+      coverInfoStore.iconImage = ''
+    }
+  },
+)
+
+const openIconUrl = (url: string) => window.open(url)
+
+function onFileChange(e: Event) {
+  const files = (e.target as HTMLInputElement).files
+  if (files && files.length > 0) {
+    const file = files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (e) => {
+      const result = e.target?.result
+      if (result && typeof result === 'string') {
+        coverInfoStore.iconImage = result
+        coverInfoStore.iconName = ''
+      }
     }
   }
-);
-
-const formatted = useDateFormat(useNow(), "YYYY-MM-DD-HH-mm-ss");
-
-const openIconUrl = (url: string) => window.open(url);
-
-const onFileChange = (e: Event) => {
-  const files = (e.target as HTMLInputElement).files;
-  if (files && files.length > 0) {
-    const file = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      const result = e.target?.result;
-      if (result && typeof result === "string") {
-        coverInfoStore.iconImage = result;
-        coverInfoStore.iconName = "";
-      }
-    };
-  }
-};
+}
 </script>
+
 <template>
   <CoverCardFrame>
     <template #head>
-      <h2 class="font-bold">{{ $t("common.Attribute", "Attribute") }}</h2>
+      <h2 class="font-bold">
+        {{ $t("common.Attribute", "Attribute") }}
+      </h2>
       <Icon
         class="cursor-pointer hover:scale-125"
         name="zmdi:github"
@@ -119,19 +114,19 @@ const onFileChange = (e: Event) => {
       >
         <UDivider :label="$t('config.aspect', 'Aspect Ratio')" />
         <USelectMenu
+          v-model="aspectRatio"
           selected-icon="i-heroicons-hand-thumb-up-solid"
-          :uiMenu="{
+          :ui-menu="{
             select: 'cursor-pointer',
             option: {
               base: 'cursor-pointer',
             },
           }"
           class="w-full"
-          @change="(val: any) => {
-          coverInfoStore.aspectRatio = val;
-        }"
-          v-model="aspectRatio"
           :options="aspectRatioOptions"
+          @change="(val: any) => {
+            coverInfoStore.aspectRatio = val;
+          }"
         />
 
         <div
@@ -139,49 +134,49 @@ const onFileChange = (e: Event) => {
           class="flex justify-between items-center gap-2"
         >
           <UInput
+            v-model="coverInfoStore.customAspectRatio.left"
             type="number"
             size="sm"
-            v-model="coverInfoStore.customAspectRatio.left"
             @change="(val: number) => {
-            coverInfoStore.setAspectRatioCustom({
-              left:val
-            });
-          }"
+              coverInfoStore.setAspectRatioCustom({
+                left: val,
+              });
+            }"
           />
           /
           <UInput
+            v-model="coverInfoStore.customAspectRatio.right"
             type="number"
             size="sm"
-            v-model="coverInfoStore.customAspectRatio.right"
             @change="(val: number) => {
-            coverInfoStore.setAspectRatioCustom({
-              right:val
-            });
-          }"
+              coverInfoStore.setAspectRatioCustom({
+                right: val,
+              });
+            }"
           />
         </div>
 
         <UDivider :label="$t('config.mask', 'Mask Layer')" />
         <div class="flex justify-between items-center gap-2 relative">
           <URange
+            v-model="colorAlpha"
             :step="0.05"
             size="xs"
-            v-model="colorAlpha"
-            @change="(e: number) => {
-            coverInfoStore.setCoverMarkColor(e)
-          }"
             :min="0"
             :max="1"
+            @change="(e: number) => {
+              coverInfoStore.setCoverMarkColor(e)
+            }"
           />
-          <pick-colors
+          <PickColors
             :colors="pickerPreColors"
             class="cursor-pointer"
             :value="coverInfoStore.coverMarkColor"
-            @change="($event: any) => {
-            coverInfoStore.setColorAlpha($event);
-          }
-            "
             show-alpha
+            @change="($event: any) => {
+              coverInfoStore.setColorAlpha($event);
+            }
+            "
           />
         </div>
 
@@ -200,16 +195,16 @@ const onFileChange = (e: Event) => {
         <UTextarea
           v-model="textTitle"
           @input="(e: any) => {
-          coverInfoStore.setCoverTitle(e.target.value as string)
-        }"
+            coverInfoStore.setCoverTitle(e.target.value as string)
+          }"
         />
         <UInput v-model="coverInfoStore.coverAuthor" />
 
         <UDivider :label="$t('config.icon', 'Icon')" />
         <UTabs
+          v-model="iconPI"
           :items="positionItems"
           @change="coverInfoStore.setIconPosition"
-          v-model="iconPI"
         >
           <template #default="{ item }">
             <div class="flex items-center gap-2 relative truncate">
@@ -235,8 +230,8 @@ const onFileChange = (e: Event) => {
         </UTabs>
         <div class="flex items-center gap-1 justify-between">
           <UInput
-            class="w-full"
             v-model="coverInfoStore.iconName"
+            class="w-full"
             :ui="{
               icon: { leading: { pointer: '' }, trailing: { pointer: '' } },
             }"
@@ -265,26 +260,30 @@ const onFileChange = (e: Event) => {
               type="file"
               value=""
               class="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer text-[0px]"
-              @change="onFileChange"
               :multiple="false"
               accept=".png,.jpg,.jpeg"
-            />
+              @change="onFileChange"
+            >
           </UButton>
         </div>
       </div>
     </template>
     <template #foot>
-      <UButton @click="reset">{{
-        $t("cover.config.reset.attribute", "Reset Attribute")
-      }}</UButton>
-      <UButton @click="generateCover">{{
-        $t("cover.config.generate", "Generate Cover")
-      }}</UButton>
+      <UButton @click="reset">
+        {{
+          $t("cover.config.reset.attribute", "Reset Attribute")
+        }}
+      </UButton>
+      <UButton @click="generateCover">
+        {{
+          $t("cover.config.generate", "Generate Cover")
+        }}
+      </UButton>
     </template>
   </CoverCardFrame>
   <UModal v-model="isOpenPreview" class="relative">
     <div class="group/item">
-      <img v-if="imgPre" :src="imgPre" class="select-none" />
+      <img v-if="imgPre" :src="imgPre" class="select-none">
       <template v-else-if="!imgPre && isOpenPreview">
         <div class="text-center m-5">
           <Icon name="line-md:loading-twotone-loop" />
@@ -294,8 +293,8 @@ const onFileChange = (e: Event) => {
       <Icon
         size="20"
         name="grommet-icons:download"
-        @click="downloadImage"
         class="hover:scale-110 absolute right-2 top-2 text-stone-50 invisible group-hover/item:visible cursor-pointer"
+        @click="downloadImage"
       />
     </div>
   </UModal>

@@ -2,7 +2,7 @@
 useHead({
   title: 'Own Cover',
   meta: [
-    { name: 'description', content: 'My Own Cover Site.' }
+    { name: 'description', content: 'My Own Cover Site.' },
   ],
 })
 </script>

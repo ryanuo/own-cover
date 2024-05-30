@@ -1,12 +1,12 @@
-import { createApi } from "unsplash-js";
+import { createApi } from 'unsplash-js'
 
-const useUnsplash = () => {
-  const accessKey = useRuntimeConfig().public.unsplashapikey;
+function useUnsplash() {
+  const accessKey = useRuntimeConfig().public.unsplashapikey
 
   const unsplash = createApi({
     accessKey,
-  });
-  return unsplash;
-};
+  })
+  return unsplash
+}
 
-export default useUnsplash;
+export default useUnsplash
