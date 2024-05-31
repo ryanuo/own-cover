@@ -7,7 +7,8 @@ import {
   positionItems,
 } from '~/constants/enums'
 
-const coverInfoStore = useCoverInfoStore()
+const coverConfigStore = useCoverConfigStore()
+const coverListStore = useCoverListStore()
 const imgPre = ref<string>('')
 const isOpenPreview = ref(false)
 const iconPI = ref(2)
@@ -18,16 +19,16 @@ const colorAlpha = ref(0.3)
 const aspectRatio = ref()
 onMounted(() => {
   nextTick(() => {
-    iconPI.value = coverInfoStore.iconPosition
-    textTitle.value = coverInfoStore.coverTitle
-    colorAlpha.value = coverInfoStore.colorAlpha
-    aspectRatio.value = coverInfoStore.aspectRatio
+    iconPI.value = coverConfigStore.iconPosition
+    textTitle.value = coverConfigStore.coverTitle
+    colorAlpha.value = coverConfigStore.colorAlpha
+    aspectRatio.value = coverConfigStore.aspectRatio
   })
 })
 
 function reset() {
-  coverInfoStore.$reset()
-  coverInfoStore.queryCoverList()
+  coverConfigStore.$reset()
+  coverListStore.buttomQueryCoverList()
 }
 
 function downloadImage() {
@@ -61,18 +62,18 @@ watch(isOpenPreview, () => {
 })
 
 watchDeep(
-  () => [coverInfoStore.colorAlpha],
+  () => [coverConfigStore.colorAlpha],
   () => {
-    colorAlpha.value = coverInfoStore.colorAlpha
+    colorAlpha.value = coverConfigStore.colorAlpha
   },
 )
 
 watch(
-  () => coverInfoStore.iconName,
+  () => coverConfigStore.iconName,
   (newVal) => {
     if (newVal !== '') {
-      coverInfoStore.iconName = newVal
-      coverInfoStore.iconImage = ''
+      coverConfigStore.iconName = newVal
+      coverConfigStore.iconImage = ''
     }
   },
 )
@@ -88,8 +89,8 @@ function onFileChange(e: Event) {
     reader.onload = (e) => {
       const result = e.target?.result
       if (result && typeof result === 'string') {
-        coverInfoStore.iconImage = result
-        coverInfoStore.iconName = ''
+        coverConfigStore.iconImage = result
+        coverConfigStore.iconName = ''
       }
     }
   }
@@ -125,7 +126,7 @@ function onFileChange(e: Event) {
           class="w-full"
           :options="aspectRatioOptions"
           @change="(val: any) => {
-            coverInfoStore.aspectRatio = val;
+            coverConfigStore.aspectRatio = val;
           }"
         />
 
@@ -134,22 +135,22 @@ function onFileChange(e: Event) {
           class="flex justify-between items-center gap-2"
         >
           <UInput
-            v-model="coverInfoStore.customAspectRatio.left"
+            v-model="coverConfigStore.customAspectRatio.left"
             type="number"
             size="sm"
             @change="(val: number) => {
-              coverInfoStore.setAspectRatioCustom({
+              coverConfigStore.setAspectRatioCustom({
                 left: val,
               });
             }"
           />
           /
           <UInput
-            v-model="coverInfoStore.customAspectRatio.right"
+            v-model="coverConfigStore.customAspectRatio.right"
             type="number"
             size="sm"
             @change="(val: number) => {
-              coverInfoStore.setAspectRatioCustom({
+              coverConfigStore.setAspectRatioCustom({
                 right: val,
               });
             }"
@@ -165,16 +166,16 @@ function onFileChange(e: Event) {
             :min="0"
             :max="1"
             @change="(e: number) => {
-              coverInfoStore.setCoverMarkColor(e)
+              coverConfigStore.setCoverMarkColor(e)
             }"
           />
           <PickColors
             :colors="pickerPreColors"
             class="cursor-pointer"
-            :value="coverInfoStore.coverMarkColor"
+            :value="coverConfigStore.coverMarkColor"
             show-alpha
             @change="($event: any) => {
-              coverInfoStore.setColorAlpha($event);
+              coverConfigStore.setColorAlpha($event);
             }
             "
           />
@@ -183,28 +184,28 @@ function onFileChange(e: Event) {
         <UDivider :label="$t('config.font', 'Font')" />
 
         <UInput
-          v-model="coverInfoStore.fontCdn"
-          @change="coverInfoStore.fontCdn = $event"
+          v-model="coverConfigStore.fontCdn"
+          @change="coverConfigStore.fontCdn = $event"
         />
         <UInput
-          v-model="coverInfoStore.fontLabel"
-          @change="coverInfoStore.fontLabel = $event"
+          v-model="coverConfigStore.fontLabel"
+          @change="coverConfigStore.fontLabel = $event"
         />
 
         <UDivider :label="$t('config.text', 'Text')" />
         <UTextarea
           v-model="textTitle"
           @input="(e: any) => {
-            coverInfoStore.setCoverTitle(e.target.value as string)
+            coverConfigStore.setCoverTitle(e.target.value as string)
           }"
         />
-        <UInput v-model="coverInfoStore.coverAuthor" />
+        <UInput v-model="coverConfigStore.coverAuthor" />
 
         <UDivider :label="$t('config.icon', 'Icon')" />
         <UTabs
           v-model="iconPI"
           :items="positionItems"
-          @change="coverInfoStore.setIconPosition"
+          @change="coverConfigStore.setIconPosition"
         >
           <template #default="{ item }">
             <div class="flex items-center gap-2 relative truncate">
@@ -230,7 +231,7 @@ function onFileChange(e: Event) {
         </UTabs>
         <div class="flex items-center gap-1 justify-between">
           <UInput
-            v-model="coverInfoStore.iconName"
+            v-model="coverConfigStore.iconName"
             class="w-full"
             :ui="{
               icon: { leading: { pointer: '' }, trailing: { pointer: '' } },
@@ -245,12 +246,12 @@ function onFileChange(e: Event) {
             </template>
             <template #trailing>
               <UButton
-                v-show="coverInfoStore.iconName !== ''"
+                v-show="coverConfigStore.iconName !== ''"
                 color="gray"
                 variant="link"
                 icon="i-heroicons-x-mark-20-solid"
                 :padded="false"
-                @click="coverInfoStore.iconName = ''"
+                @click="coverConfigStore.iconName = ''"
               />
             </template>
           </UInput>

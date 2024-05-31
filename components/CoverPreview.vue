@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const coverInfoStore = useCoverInfoStore()
-
+const coverConfigStore = useCoverConfigStore()
 function updateFontFace() {
-  const fontFace = coverInfoStore.fontLabel
-  const fontCdn = coverInfoStore.fontCdn
+  const fontFace = coverConfigStore.fontLabel
+  const fontCdn = coverConfigStore.fontCdn
 
   const oldStyle = document.getElementById('cover-preview')
   if (oldStyle)
@@ -32,13 +31,13 @@ function updateFontFace() {
 
 const coverInfo = ref()
 onMounted(() => {
-  coverInfo.value = coverInfoStore
+  coverInfo.value = coverConfigStore
 })
 
 watch(
-  () => [coverInfoStore.fontCdn, coverInfoStore.fontLabel],
+  () => [coverConfigStore.fontCdn, coverConfigStore.fontLabel],
   () => {
-    if (coverInfoStore.fontLabel && coverInfoStore.fontCdn && document)
+    if (coverConfigStore.fontLabel && coverConfigStore.fontCdn && document)
       updateFontFace()
   },
   {

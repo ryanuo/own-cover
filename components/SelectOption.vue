@@ -7,7 +7,9 @@ interface Option {
 }
 
 // 引入 emit 方法
-const props = defineProps < Option > (); const emit = defineEmits(['update:modelValue']); const currentValue = ref(props.modelValue) // 内部状态，用于存储当前选择的值
+const props = defineProps<Option>()
+const emit = defineEmits(['update:modelValue'])
+const currentValue = ref(props.modelValue) // 内部状态，用于存储当前选择的值
 const showDropdown = ref(false)
 
 const options_list = computed(() => {

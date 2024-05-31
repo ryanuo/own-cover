@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const coverInfo = useCoverInfoStore()
+const coverListStore = useCoverListStore()
 const tabActive = ref(0)
 const asides = reactive([
   {
@@ -14,12 +14,12 @@ const asides = reactive([
 ])
 
 onMounted(() => {
-  coverInfo.queryCoverList()
+  if (coverListStore.coverList.length === 0)
+    coverListStore.buttomQueryCoverList()
 })
 
 const debouncedQuery = useDebounceFn(() => {
-  coverInfo.coverList = []
-  coverInfo.queryCoverList()
+  coverListStore.buttomQueryCoverList()
 }, 1000)
 
 function handleClick() {
@@ -35,7 +35,7 @@ function onFileChange(e: Event) {
     reader.onload = (e) => {
       const result = e.target?.result
       if (result && typeof result === 'string') {
-        coverInfo.setCoverImgMap({
+        coverListStore.setCoverImgMap({
           id: new Date().getTime(),
           urls: {
             small: result,
@@ -93,7 +93,7 @@ function onFileChange(e: Event) {
           >
         </UButton>
         <UInput
-          v-model="coverInfo.coverSearchQuery" class="w-full mx-2" size="xs" color="primary" variant="outline"
+          v-model="coverListStore.coverSearchQuery" class="w-full mx-2" size="xs" color="primary" variant="outline"
           placeholder="Search..."
         />
         <UButton @click="handleClick">
@@ -115,7 +115,7 @@ function onFileChange(e: Event) {
               </UButton>
               <UButton
                 class="my-1" @click="() => {
-                  coverInfo.history_selected_lists = [];
+                  coverListStore.history_selected_lists = [];
                   close();
                 }
                 "
