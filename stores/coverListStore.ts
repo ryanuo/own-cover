@@ -12,7 +12,8 @@ interface ListState {
   coverSearchQuery: string
   coverLoading: boolean
   history_selected_lists: CoverImage[]
-  previewCoverMap: CoverImage // 初始化为一个空对象或具体类型
+  previewCoverMap: CoverImage
+  queryLoading: boolean
   [key: string]: any
 }
 export const useCoverListStore = defineStore('coverList', {
@@ -25,7 +26,8 @@ export const useCoverListStore = defineStore('coverList', {
     coverSearchQuery: 'simple',
     coverLoading: false,
     history_selected_lists: [] as CoverImage[],
-    previewCoverMap: previewImageMap, // 初始化为一个空对象或具体类型
+    previewCoverMap: previewImageMap,
+    queryLoading: false,
   }),
 
   actions: {
@@ -48,10 +50,12 @@ export const useCoverListStore = defineStore('coverList', {
       }
       finally {
         callback?.()
+        this.queryLoading = false
       }
     },
 
     scrollQueryCoverList(callback: () => void) {
+      this.queryLoading = true
       this.page++
       if (this.page <= this.total_pages)
         this.queryCoverList()

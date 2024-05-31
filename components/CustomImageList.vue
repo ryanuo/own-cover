@@ -89,5 +89,8 @@ const onClick: PhotoClickHandler = (payload) => {
         {{ $t("cover.empty", "empty") }}
       </div>
     </div>
+    <div v-if="coverListStore.queryLoading" class="flex justify-center mt-2">
+      <Icon name="eos-icons:bubble-loading" />
+    </div>
   </div>
 </template>
