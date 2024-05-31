@@ -4,7 +4,7 @@ defineProps({
   iconName: String,
   iconImage: String,
   iconPosition: Number,
-  coverIconPosition: String, // 这应该是样式字符串
+  coverIconPosition: String,
 })
 </script>
 
