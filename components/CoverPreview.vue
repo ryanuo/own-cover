@@ -60,7 +60,8 @@ watch(
     <div
       class="m-auto rounded-md flex items-center justify-center min-w-[800px]"
     >
-      <div v-if="coverConfig" id="cover-preview-generate" class="relative">
+      <div v-if="coverConfig" id="cover-preview-generate" class="relative group/item">
+        <CoverAPIDocsModal class="absolute invisible group-hover/item:visible right-2" />
         <div
           class="max-h-[90vh]"
           :style="{
