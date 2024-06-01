@@ -1,6 +1,6 @@
+import sharp from 'sharp'
 import { createCanvas, loadImage } from 'canvas'
 import axios from 'axios'
-import sharp from 'sharp'
 
 // 图标位置类型
 type IconPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center'
