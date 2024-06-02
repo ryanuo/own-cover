@@ -46,7 +46,7 @@ export const useCoverConfigStore = defineStore('coverConfig', {
     setCoverTitle(title: string) {
       this.coverTitle = title
     },
-    setAspectRatioCustom(params: { left?: number, right?: number }) {
+    setAspectRatioCustom(params: { left?: number | string, right?: number | string }) {
       const aspectRatio = this.aspectRatio.value.split(' / ')
       const leftVal = params.left ?? aspectRatio[0]
       const rightVal = params.right ?? aspectRatio[1]
