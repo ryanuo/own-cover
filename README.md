@@ -31,7 +31,7 @@ Google Font CDN:
 
 ### Online Demo
 
-You can try it out at [Own Cover](https://oc.mr90.top)
+You can try it out at [Own Cover](https://c.ryanuo.cc)
 
 ### Local Development
 

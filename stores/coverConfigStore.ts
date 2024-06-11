@@ -7,7 +7,7 @@ export const useCoverConfigStore = defineStore('coverConfig', {
     iconName: 'material-symbols:adaptive-audio-mic',
     iconPosition: 3,
     coverTitle: 'You must work very hard to appear effortless.',
-    coverAuthor: '@Ryanco',
+    coverAuthor: '@Ryanuo',
     coverMarkColor: 'rgba(0, 0, 0, 0.3)',
     colorAlpha: 0.3,
     aspectRatio: aspectRatioOptions[2],

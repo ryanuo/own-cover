@@ -42,7 +42,7 @@ function onFileChange(e: Event) {
             regular: result,
           },
           user: {
-            name: 'Ryanco',
+            name: 'Ryanuo',
             profile_image: {
               small: 'https://avatars.githubusercontent.com/u/66169324?v=4',
             },

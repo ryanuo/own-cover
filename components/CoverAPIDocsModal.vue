@@ -34,15 +34,15 @@ const isOpen = ref(false)
           <h4>
             5. 封面文字/作者名称自定义
           </h4>
-          <code>/generate?title=自定义文字&author=@Ryanco</code>
+          <code>/generate?title=自定义文字&author=@Ryanuo</code>
           <h4>
             6. 封面背景自定义
           </h4>
-          <code>/generate?bg=https://cdn.jsdelivr.net/gh/Ryanco/CDN/img/bg.jpg</code>
+          <code>/generate?bg=https://cdn.jsdelivr.net/gh/Ryanuo/CDN/img/bg.jpg</code>
           <h4>
             7. 图标自定义
           </h4>
-          <code>/generate?icon=https://cdn.jsdelivr.net/gh/Ryanco/CDN/img/icon.png</code>
+          <code>/generate?icon=https://cdn.jsdelivr.net/gh/Ryanuo/CDN/img/icon.png</code>
           <h4>
             8. 自定义图标的位置
           </h4>
